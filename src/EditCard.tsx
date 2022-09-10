@@ -1,5 +1,3 @@
 export const EditCard = () => {
-    return (
-        <div></div>
-    );
-}
+  return <div></div>;
+};

@@ -1,5 +1,3 @@
 export const NewGame = () => {
-    return (
-        <div></div>
-    );
-}
+  return <div></div>;
+};
