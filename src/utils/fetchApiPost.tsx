@@ -1,4 +1,4 @@
-export async function makeAPIPost<T>(
+export async function fetchApiPost<T>(
   URL: string,
   actualData: T[],
   dataToAdd: T
@@ -10,7 +10,7 @@ export async function makeAPIPost<T>(
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataToAdd),
       });
-      const json = await apiResponse.json();
+      await apiResponse.json();
     } catch (error) {
       console.log(error);
     }

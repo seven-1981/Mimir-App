@@ -1,8 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import { CardListItem } from "./CardListItem";
 import { useAPIGet } from "../hooks/useAPIHook";
-import { makeAPIPost } from "../utils/makeAPIPost";
+import { fetchApiPost } from "../utils/fetchApiPost";
 import { Card, createCard } from "../models/Card";
+import { fetchApiDeleteCard } from "../utils/fetchApiDeleteCard";
 
 export const CardList = () => {
   const [backText, setBackText] = useState<String>("");
@@ -18,7 +19,7 @@ export const CardList = () => {
   };
 
   const onClickAddButton = async () => {
-    const newCardData = await makeAPIPost<Card>(
+    const newCardData = await fetchApiPost<Card>(
       "/api/cards",
       cards,
       createCard(frontText, backText)
@@ -26,6 +27,12 @@ export const CardList = () => {
     setCards(newCardData);
     setFrontText("");
     setBackText("");
+  };
+
+  const onClickDeleteButton = async (id: string) => {
+    console.log("Delete button called with id " + id);
+    const newCardData = await fetchApiDeleteCard("/api/cards", id, cards);
+    setCards(newCardData);
   };
 
   return (
@@ -41,9 +48,9 @@ export const CardList = () => {
                 card={card}
                 key={card.id.toString()}
                 isUpdateCard={false}
-                onClickDeleteButton={(id: String) => {
-                  console.log("Delete Button clicked with id " + id);
-                }}
+                onClickDeleteButton={() =>
+                  onClickDeleteButton(card.id.toString())
+                }
                 onClickEditButton={(id: String) => {
                   console.log("Edit Button clicked with id " + id);
                 }}
