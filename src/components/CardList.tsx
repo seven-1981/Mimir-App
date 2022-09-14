@@ -1,15 +1,13 @@
 import { ChangeEvent, useState } from "react";
-import { Card, CardProps } from "./Card";
-import { useAPIGet } from "./useAPIHook";
-import { makeAPIPost } from "./makeAPIPost";
-
-const { v4: uuidV4 } = require("uuid");
+import { CardListItem } from "./CardListItem";
+import { useAPIGet } from "../hooks/useAPIHook";
+import { makeAPIPost } from "../utils/makeAPIPost";
+import { Card, createCard } from "../models/Card";
 
 export const CardList = () => {
   const [backText, setBackText] = useState<String>("");
   const [frontText, setFrontText] = useState<String>("");
-  const { data } = useAPIGet("/api/cards");
-  //const [cards, setCards] = useState<[]>(data);
+  const [cards, setCards] = useAPIGet<Card>("/api/cards");
 
   const eventChangeFront = (event: ChangeEvent<HTMLInputElement>) => {
     setFrontText(event.target.value);
@@ -19,41 +17,29 @@ export const CardList = () => {
     setBackText(event.target.value);
   };
 
-  const setCallback = (data: any) => {
-    //setCards(data);
-    console.log("CALLBACK CALLED");
-  };
-
   const onClickAddButton = async () => {
-    await makeAPIPost(
+    const newCardData = await makeAPIPost<Card>(
       "/api/cards",
-      {
-        id: uuidV4(),
-        front: frontText,
-        back: backText,
-      },
-      setCallback
+      cards,
+      createCard(frontText, backText)
     );
+    setCards(newCardData);
+    setFrontText("");
+    setBackText("");
   };
 
   return (
     <>
-      <input
-        type="text"
-        onChange={eventChangeFront}
-        placeholder="FrontInput ?"
-      />
-      <input type="text" onChange={eventChangeBack} placeholder="BackInput ?" />
-      <button onClick={onClickAddButton}>Add</button>
+      <input type="text" onChange={eventChangeFront} placeholder="Front" />
+      <input type="text" onChange={eventChangeBack} placeholder="Back" />
+      <button onClick={() => onClickAddButton()}>Add</button>
       <ul>
-        {data &&
-          data.map((item: CardProps) => {
+        {cards &&
+          cards.map((card) => {
             return (
-              <Card
-                id={item.id}
-                key={uuidV4()}
-                front={item.front}
-                back={item.back}
+              <CardListItem
+                card={card}
+                key={card.id.toString()}
                 isUpdateCard={false}
                 onClickDeleteButton={(id: String) => {
                   console.log("Delete Button clicked with id " + id);

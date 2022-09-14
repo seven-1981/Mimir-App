@@ -1,17 +1,9 @@
 import { useEffect, useState } from "react";
 
-export type GetAPIResponse = {
-  status: Number;
-  statusText: String;
-  data: any;
-  error: any;
-  loading: Boolean;
-};
-
-export const useAPIGet = (URL: string): GetAPIResponse => {
+export function useAPIGet<T>(URL: string = ""): [T[], (dummy: T[]) => void] {
   const [status, setStatus] = useState<Number>(0);
   const [statusText, setStatusText] = useState<String>("");
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<T[]>([]);
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -26,6 +18,7 @@ export const useAPIGet = (URL: string): GetAPIResponse => {
       console.log(json);
     } catch (error) {
       setError(error);
+      console.log(error);
     }
     setLoading(false);
   };
@@ -34,5 +27,5 @@ export const useAPIGet = (URL: string): GetAPIResponse => {
     getAPIData();
   }, []);
 
-  return { status, statusText, data, error, loading };
-};
+  return [data, setData];
+}
