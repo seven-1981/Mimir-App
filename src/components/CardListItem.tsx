@@ -1,8 +1,8 @@
 import { Card } from "../models/Card";
+import { Link } from "react-router-dom";
 
 export interface CardListItemProps {
   card: Card;
-  onClickEditButton: (id: String) => void;
   onClickDeleteButton: (id: String) => void;
   isUpdateCard: boolean;
   onClickUpdateButton: (id: String) => void;
@@ -10,7 +10,6 @@ export interface CardListItemProps {
 
 export const CardListItem = ({
   card,
-  onClickEditButton,
   onClickDeleteButton,
   isUpdateCard,
   onClickUpdateButton,
@@ -29,7 +28,7 @@ export const CardListItem = ({
       <>
         <div>
           {card.front} {card.back}
-          <button onClick={() => onClickEditButton(card.id)}>Edit</button>{" "}
+          <Link to={card.id}>Edit</Link>
           <button onClick={() => onClickDeleteButton(card.id)}>Delete</button>
         </div>
       </>

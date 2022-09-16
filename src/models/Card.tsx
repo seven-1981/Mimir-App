@@ -1,11 +1,11 @@
 const { v4: uuidV4 } = require("uuid");
 
 export type Card = {
-  id: String;
-  front: String;
-  back: String;
+  id: string;
+  front: string;
+  back: string;
 };
 
-export const createCard = (front: String, back: String) => {
+export const createCard = (front: string, back: string) => {
   return { id: uuidV4(), front: front, back: back };
 };
