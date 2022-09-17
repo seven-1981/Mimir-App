@@ -1,17 +1,27 @@
 import { CardListItem } from "./CardListItem";
-import { useAPIGet } from "../hooks/useAPIHook";
-import { Card } from "../models/Card";
+import { fetchApiGetCards } from "../utils/fetchApiGetCards";
+
 import { fetchApiDeleteCard } from "../utils/fetchApiDeleteCard";
 import { CardInput } from "./CardInput";
 import { fetchApiEditCard } from "../utils/fetchApiEditCard";
+import { AppContext } from "../store/context";
+import { useContext, useEffect } from "react";
 
 export const CardList = () => {
-  const [cards, setCards] = useAPIGet<Card>("/api/cards");
+  const { cards, dispatch } = useContext(AppContext);
+
+  useEffect(() => {
+    const onMount = async () => {
+      const cards = await fetchApiGetCards("/api/cards");
+      dispatch({ type: "set-cards", cards });
+    };
+    onMount();
+  }, []);
 
   const onClickDeleteButton = async (id: string) => {
     console.log("Delete button clicked with id " + id);
     const newCardData = await fetchApiDeleteCard("/api/cards", id, cards);
-    setCards(newCardData);
+    dispatch({ type: "delete-card", id });
   };
 
   const onClickEditButton = (id: string) => {
@@ -20,7 +30,10 @@ export const CardList = () => {
 
   return (
     <>
-      <CardInput cards={cards} setCards={setCards} />
+      <CardInput
+        cards={cards}
+        setCards={() => dispatch({ type: "set-cards", cards })}
+      />
       <ul>
         {cards &&
           cards.map((card) => {

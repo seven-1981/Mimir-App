@@ -1,8 +1,4 @@
-export async function fetchApiPost<T>(
-  URL: string,
-  actualData: T[],
-  dataToAdd: T
-): Promise<T[]> {
+export async function fetchApiPost<T>(URL: string, dataToAdd: T) {
   const postAPIData = async () => {
     try {
       const apiResponse = await fetch(URL, {
@@ -16,5 +12,4 @@ export async function fetchApiPost<T>(
     }
   };
   await postAPIData();
-  return [...actualData, dataToAdd];
 }

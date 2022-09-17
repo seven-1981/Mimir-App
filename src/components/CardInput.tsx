@@ -1,6 +1,7 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { fetchApiPost } from "../utils/fetchApiPost";
 import { Card, createCard } from "../models/Card";
+import { AppContext } from "../store/context";
 
 export interface CardInputProps {
   cards: Card[];
@@ -8,6 +9,7 @@ export interface CardInputProps {
 }
 
 export const CardInput = (props: CardInputProps) => {
+  const { dispatch } = useContext(AppContext);
   const [backText, setBackText] = useState<string>("");
   const [frontText, setFrontText] = useState<string>("");
 
@@ -23,12 +25,9 @@ export const CardInput = (props: CardInputProps) => {
     if (frontText === "" || backText === "") {
       return;
     }
-    const newCardData = await fetchApiPost<Card>(
-      "/api/cards",
-      props.cards,
-      createCard(frontText, backText)
-    );
-    props.setCards(newCardData);
+    const newCard = createCard(frontText, backText);
+    await fetchApiPost<Card>("/api/cards", newCard);
+    dispatch({ type: "add-card", card: newCard });
     setFrontText("");
     setBackText("");
   };

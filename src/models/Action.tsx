@@ -1,8 +1,18 @@
 import { Card } from "./Card";
 
-type GetCardsAction = {
-  type: "get-cards";
+type SetCardsAction = {
+  type: "set-cards";
   cards: Card[];
 };
 
-export type Action = GetCardsAction;
+type DeleteCardAction = {
+  type: "delete-card";
+  id: string;
+};
+
+type AddCardAction = {
+  type: "add-card";
+  card: Card;
+};
+
+export type Action = SetCardsAction | DeleteCardAction | AddCardAction;
