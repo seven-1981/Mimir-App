@@ -41,13 +41,9 @@ export const CardList = () => {
               <CardListItem
                 card={card}
                 key={card.id.toString()}
-                isUpdateCard={false}
                 onClickDeleteButton={() =>
                   onClickDeleteButton(card.id.toString())
                 }
-                onClickUpdateButton={(id: String) => {
-                  console.log("Update Button called with id " + id);
-                }}
               />
             );
           })}
