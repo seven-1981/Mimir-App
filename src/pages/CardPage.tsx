@@ -1,24 +1,19 @@
-import { CardEditItem } from "../components/CardListItem";
+import { useParams } from "react-router-dom";
+import { CardInput } from "../components/CardInput";
 import { useContext } from "react";
 import { AppContext } from "../store/context";
-import { useParams } from "react-router-dom";
-import { createCard } from "../models/Card";
 
 export const CardPage = () => {
-  const { cards } = useContext(AppContext);
   const params = useParams();
+  const { cards } = useContext(AppContext);
 
-  const selectedCard =
-    cards.find((card) => {
-      return card.id === params.cardId;
-    }) ?? createCard("FRONT", "BACK"); // not nice (new card if undefined)
+  const selectedCard = cards.find((card) => {
+    return card.id === params.cardId;
+  });
 
   return (
     <div>
-      <CardEditItem
-        card={selectedCard}
-        onClickUpdateButton={() => console.log("UPD")}
-      />
+      <CardInput cardId={params.cardId} card={selectedCard} />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { ApiState } from "../models/ApiState";
 import { Action } from "../models/Action";
 import { initialState } from "./context";
+import { createCard } from "../models/Card";
 
 export function apiReducer(state: ApiState, action: Action): ApiState {
   switch (action.type) {
@@ -19,6 +20,13 @@ export function apiReducer(state: ApiState, action: Action): ApiState {
     case "add-card":
       return {
         cards: [...state.cards, action.card],
+        dispatch: state.dispatch,
+      };
+    case "update-card":
+      return {
+        cards: state.cards.map((card) => {
+          return card.id === action.id ? action.card : card;
+        }),
         dispatch: state.dispatch,
       };
     default:

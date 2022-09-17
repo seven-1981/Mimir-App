@@ -15,4 +15,14 @@ type AddCardAction = {
   card: Card;
 };
 
-export type Action = SetCardsAction | DeleteCardAction | AddCardAction;
+type UpdateCardAction = {
+  type: "update-card";
+  id: string;
+  card: Card;
+};
+
+export type Action =
+  | SetCardsAction
+  | DeleteCardAction
+  | AddCardAction
+  | UpdateCardAction;
