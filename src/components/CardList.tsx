@@ -4,7 +4,6 @@ import { fetchApiDeleteCard } from "../utils/fetchApiDeleteCard";
 import { CardInput } from "./CardInput";
 import { AppContext } from "../store/context";
 import { useContext, useEffect } from "react";
-import { createCard } from "../models/Card";
 
 export const CardList = () => {
   const { cards, dispatch } = useContext(AppContext);

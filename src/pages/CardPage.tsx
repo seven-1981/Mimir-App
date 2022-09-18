@@ -1,19 +1,16 @@
 import { useParams } from "react-router-dom";
-import { CardInput } from "../components/CardInput";
-import { useContext } from "react";
-import { AppContext } from "../store/context";
+import { CardEdit } from "../components/CardEdit";
 
 export const CardPage = () => {
-  const params = useParams();
-  const { cards } = useContext(AppContext);
+  let { cardId } = useParams<string>();
 
-  const selectedCard = cards.find((card) => {
-    return card.id === params.cardId;
-  });
+  if (!cardId) {
+    cardId = ""; // why is this necessary? how to avoid this shit?
+  } // react complains about string | undefined here :(
 
   return (
     <div>
-      <CardInput cardId={params.cardId} card={selectedCard} />
+      <CardEdit id={cardId} />
     </div>
   );
 };

@@ -1,4 +1,6 @@
-export async function fetchApiPost<T>(URL: string, dataToAdd: T) {
+import { Card } from "../models/Card";
+
+export async function fetchApiPost(URL: string, dataToAdd: Card) {
   const postAPIData = async () => {
     try {
       const apiResponse = await fetch(URL, {
