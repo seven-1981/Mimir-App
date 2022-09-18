@@ -5,7 +5,6 @@ export const fetchApiGetCards = async (URL: string): Promise<Card[]> => {
     const apiResponse = await fetch(URL);
     if (apiResponse.ok) {
       const jsonData = await apiResponse.json();
-      console.log(jsonData);
       return jsonData;
     }
   } catch (error) {

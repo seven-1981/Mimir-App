@@ -11,30 +11,34 @@ export const CardList = () => {
   useEffect(() => {
     const onMount = async () => {
       const cards = await fetchApiGetCards("/api/cards");
+      if (!cards) {
+        return;
+      }
       dispatch({ type: "set-cards", cards });
     };
     onMount();
   }, []);
 
   const onClickDeleteButton = async (id: string) => {
-    console.log("Delete button clicked with id " + id);
-    const newCardData = await fetchApiDeleteCard("/api/cards", id, cards); // return value ?
+    const success = await fetchApiDeleteCard("/api/cards", id, cards);
+    if (!success) {
+      return;
+    }
     dispatch({ type: "delete-card", id });
   };
 
   return (
     <>
       <CardInput />
+      <p>{!cards && "NO CARDS FOUND"}</p>
       <ul>
         {cards &&
           cards.map((card) => {
             return (
               <CardListItem
                 card={card}
-                key={card.id.toString()}
-                onClickDeleteButton={() =>
-                  onClickDeleteButton(card.id.toString())
-                }
+                key={card.id}
+                onClickDeleteButton={() => onClickDeleteButton(card.id)}
               />
             );
           })}
