@@ -1,0 +1,48 @@
+import { CardListItem } from "./CardListItem";
+import { fetchApiGetCards } from "../utils/fetchApiGetCards";
+import { fetchApiDeleteCard } from "../utils/fetchApiDeleteCard";
+import { CardInput } from "./CardInput";
+import { AppContext } from "../store/context";
+import { useContext, useEffect } from "react";
+
+export const CardList = () => {
+  const { cards, dispatch } = useContext(AppContext);
+
+  useEffect(() => {
+    const onMount = async () => {
+      const cards = await fetchApiGetCards("/api/cards");
+      if (!cards) {
+        return;
+      }
+      dispatch({ type: "set-cards", cards });
+    };
+    onMount();
+  }, []);
+
+  const onClickDeleteButton = async (id: string) => {
+    const success = await fetchApiDeleteCard("/api/cards", id, cards);
+    if (!success) {
+      return;
+    }
+    dispatch({ type: "delete-card", id });
+  };
+
+  return (
+    <>
+      <CardInput />
+      <p>{!cards && "NO CARDS FOUND"}</p>
+      <ul>
+        {cards &&
+          cards.map((card) => {
+            return (
+              <CardListItem
+                card={card}
+                key={card.id}
+                onClickDeleteButton={() => onClickDeleteButton(card.id)}
+              />
+            );
+          })}
+      </ul>
+    </>
+  );
+};

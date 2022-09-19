@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { TitleBar } from "./TitleBar";
 
-export const Home = () => {
+export const HomePage = () => {
   return (
     <div>
       <TitleBar />

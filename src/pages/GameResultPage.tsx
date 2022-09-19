@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {GameCardProps} from "./GameCardProps";
+import {GameCard} from "../models/GameCard";
 
 
 export const GameResultPage = () => {

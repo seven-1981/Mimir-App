@@ -1,4 +1,4 @@
-export interface GameCardProps {
+export interface GameCard {
     id: String;
     front: String;
     back: String;
