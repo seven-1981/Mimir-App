@@ -8,7 +8,7 @@ export const fetchApiGetCards = async (URL: string): Promise<Card[]> => {
       return jsonData;
     }
   } catch (error) {
-    console.log("Error " + error + " during fetching " + URL);
+    console.log("Error " + error + " during GET " + URL);
   }
-  return [];
+  return []; // Todo: Should we be able to distinguish between empty and error here ?
 };

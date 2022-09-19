@@ -1,17 +1,19 @@
 import { Card } from "../models/Card";
 
 export async function fetchApiPost(URL: string, dataToAdd: Card) {
-  const postAPIData = async () => {
+  const postAPIData = async (): Promise<boolean> => {
     try {
       const apiResponse = await fetch(URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataToAdd),
       });
-      await apiResponse.json();
+      return apiResponse.ok;
     } catch (error) {
-      console.log(error);
+      console.log("Error " + error + " during POST " + URL);
+      return false;
     }
   };
-  await postAPIData();
+  const response = await postAPIData();
+  return response;
 }

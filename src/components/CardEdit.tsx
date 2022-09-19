@@ -37,7 +37,7 @@ export const CardEdit = (props: CardEditProps) => {
     let selectedCard = getSelectedCard();
     selectedCard.back = backText;
     selectedCard.front = frontText;
-    await fetchApiEditCard("/api/cards", id, selectedCard);
+    await fetchApiEditCard("/api/cards", id, selectedCard); // Todo : add return value evaluation here
     dispatch({ type: "update-card", id: id, card: selectedCard });
     navigate("/cards"); // allowed ?
   };

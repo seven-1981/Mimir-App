@@ -18,7 +18,7 @@ export async function fetchApiDeleteCard(
       });
       return apiResponse.ok;
     } catch (error) {
-      console.log("Error " + error + " during fetching " + URL);
+      console.log("Error " + error + " during DELETE " + URL);
       return false;
     }
   };

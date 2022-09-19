@@ -8,13 +8,20 @@ export const CardInput = () => {
   const [backText, setBackText] = useState<string>("");
   const [frontText, setFrontText] = useState<string>("");
 
+  //const doesCardExist() => {
+  //
+  //  }
+
   const onClickAddButton = async () => {
     if (frontText === "" || backText === "") {
       return;
     }
     // Todo: check if card already exists here
     const newCard = createCard(frontText, backText);
-    await fetchApiPost("/api/cards", newCard);
+    const success = await fetchApiPost("/api/cards", newCard);
+    if (!success) {
+      return;
+    }
     dispatch({ type: "add-card", card: newCard });
     setFrontText("");
     setBackText("");

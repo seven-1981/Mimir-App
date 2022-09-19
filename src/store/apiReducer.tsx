@@ -1,7 +1,6 @@
 import { ApiState } from "../models/ApiState";
 import { Action } from "../models/Action";
 import { initialState } from "./context";
-import { createCard } from "../models/Card";
 
 export function apiReducer(state: ApiState, action: Action): ApiState {
   switch (action.type) {
