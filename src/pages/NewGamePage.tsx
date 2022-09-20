@@ -1,53 +1,63 @@
-import {useAPIGet} from "../utils/useApiGet";
-import {useEffect, useState} from "react";
-import {ChangeEvent} from "react";
+import {ChangeEvent, useContext, useEffect, useState} from "react";
+import {AppContext} from "../store/context";
+import {fetchApiPostGame} from "../utils/fetchApiPostGame";
+import {GameAnswer} from "../components/GameAnswer";
 import {GameCard} from "../models/GameCard";
-import {useNavigate} from "react-router-dom";
 import {Game} from "../models/Game";
 
+
 export const NewGamePage = () => {
-    const {data} = useAPIGet("/api/cards");
+    const {cards} = useContext(AppContext);
     const [index, setIndex] = useState<number>(0);
-    const [inputText, setInputText] = useState("");
     const [progress, setProgress] = useState<number>(0);
     const [card, setCard] = useState<GameCard>({
-        id: "", front: "", back: "", answer: "", type: false })
+        id: "", front: "", back: "", answer: "", accepted: false })
     const [result, setResult] = useState<GameCard[]>([])
-    const navigate = useNavigate();
-   // const [game, setGame] = useState<Game>({front: "", cardCount: 0, solved: result})
+    const [game, setGame] = useState<Game>({front: "", cardCount: 0, solved: result})   // Todo: Move to context
+    const [inputText, setInputText] = useState("");
 
     useEffect( () => {
-        if(data != null) {
-           setCard( data[index] )
-           setProgress(Math.round(100*index/data.length));
-        }
-    }, [index, data])
+        if(cards.length === 0) {return;}         // Todo: How to check whether array is empty
+        const selectedCard = cards[index];
+        const gameCard = {
+            id: selectedCard.id,
+            front: selectedCard.front,
+            back: selectedCard.back,
+            answer: "",
+            accepted: false }
+
+       setCard( gameCard );
+       setProgress(Math.round(100*index/cards.length));
+    }, [index, cards])
 
     const deleteOnClick = () => {
         console.log("Delete clicked");
     }
 
-    const submitOnClick = () => {
+    const submitOnClick = async () => {
         evaluateAnswer();
-        postGameStatus();
+        await postGameStatus();
         updateIndex();
     }
 
     const evaluateAnswer = () => {
         card.answer = inputText;
-        if(data[index].back ===  card.answer) { card.type = true; }
-        else                                  { card.type = false;}
+        if(cards[index].back ===  card.answer) { card.accepted = true; }
+        else                                   { card.accepted = false;}
 
         setResult(result => [...result, card]);
-        setInputText("");
     }
 
     const updateIndex = () => {
-        if(index < data.length) { setIndex(index + 1); }
-        else { navigate( "/game/result") }
+        if(index < cards.length) { setIndex(index + 1); }
+        else { /* navigate( "/game/result") */}
     }
 
-    const postGameStatus = () => {
+    const postGameStatus = async () => {
+        const success = await fetchApiPostGame( '/api/game', game);
+        if(!success) {
+            console.log("Failed to post current game state");   // Todo: Evaluate return state
+        }
     }
 
     const inputFieldChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
