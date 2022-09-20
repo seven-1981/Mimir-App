@@ -1,7 +1,6 @@
 import {ChangeEvent, useContext, useEffect, useState} from "react";
 import {AppContext} from "../store/context";
 import {fetchApiPostGame} from "../utils/fetchApiPostGame";
-import {GameAnswer} from "../components/GameAnswer";
 import {GameCard} from "../models/GameCard";
 import {Game} from "../models/Game";
 
@@ -13,7 +12,7 @@ export const NewGamePage = () => {
     const [card, setCard] = useState<GameCard>({
         id: "", front: "", back: "", answer: "", accepted: false })
     const [result, setResult] = useState<GameCard[]>([])
-    const [game, setGame] = useState<Game>({front: "", cardCount: 0, solved: result})   // Todo: Move to context
+    const [game, setGame] = useState<Game>({front: "", cardCount: 0, solved: result})
     const [inputText, setInputText] = useState("");
 
     useEffect( () => {
@@ -36,28 +35,39 @@ export const NewGamePage = () => {
 
     const submitOnClick = async () => {
         evaluateAnswer();
+        addResultToGameStatus();
         await postGameStatus();
         updateIndex();
     }
 
     const evaluateAnswer = () => {
         card.answer = inputText;
+        setInputText("");
         if(cards[index].back ===  card.answer) { card.accepted = true; }
         else                                   { card.accepted = false;}
+    }
 
+    const addResultToGameStatus = () => {
         setResult(result => [...result, card]);
+        const currentGame = {
+            front: "???",
+            cardCount: index,
+            solved: result
+        }
+        setGame(currentGame);
     }
 
     const updateIndex = () => {
         if(index < cards.length) { setIndex(index + 1); }
-        else { /* navigate( "/game/result") */}
+        else { /* navigate( "/game/result") */} // Todo: Siehe Kommentar
     }
 
     const postGameStatus = async () => {
-        const success = await fetchApiPostGame( '/api/game', game);
-        if(!success) {
-            console.log("Failed to post current game state");   // Todo: Evaluate return state
-        }
+        await fetchApiPostGame( '/api/game', game).then(
+            value => {
+                console.log("Post Game Status: " + value);
+            }
+        );
     }
 
     const inputFieldChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
