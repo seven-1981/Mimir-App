@@ -1,7 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
-import { GamePage } from "./pages/GamePage";
+import { NewGamePage } from "./pages/NewGamePage";
+import { GameResultPage} from "./pages/GameResultPage";
 import { CardsPage } from "./pages/CardsPage";
 import { CardPage } from "./pages/CardPage";
 
@@ -9,6 +10,7 @@ const ROUTE_HOME = "/";
 const ROUTE_CARDS = "/cards";
 const ROUTE_CARD = "/cards/:cardId";
 const ROUTE_GAME = "/game";
+const ROUTE_GAME_RESULT = "/game/result";
 const ROUTE_NOT_FOUND = "*";
 
 function App() {
@@ -18,8 +20,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path={ROUTE_HOME} element={<HomePage />}>
-          <Route path={ROUTE_GAME} element={<GamePage />} />
+          <Route path={ROUTE_HOME} element={<HomePage />}>
+          <Route path={ROUTE_GAME} element={<NewGamePage />} />
+          <Route path={ROUTE_GAME_RESULT} element={<GameResultPage />} />
           <Route path={ROUTE_CARDS} element={<CardsPage />} />
           <Route path={ROUTE_CARD} element={<CardPage />} />
           <Route
