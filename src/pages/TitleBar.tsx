@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
+import { StyledLink, StyledTitle } from "../components/styles";
 
 export const TitleBar = () => {
   return (
-    <div>
-      Mimir
-      <Link to={"/game"}>New Game </Link>
-      <Link to={"/cards"}> Manage Cards</Link>
-      <div> No game running </div>
-    </div>
+    <StyledTitle>
+      <p>Mimir</p>
+      <StyledLink to={"/game"}>New Game </StyledLink>
+      <StyledLink to={"/cards"}> Manage Cards</StyledLink>
+    </StyledTitle>
   );
 };

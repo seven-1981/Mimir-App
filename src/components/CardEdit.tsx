@@ -3,6 +3,7 @@ import { Card } from "../models/Card";
 import { AppContext } from "../store/context";
 import { fetchApiEditCard } from "../utils/fetchApiEditCard";
 import { useNavigate } from "react-router-dom";
+import { StyledButton } from "./styles";
 
 export interface CardEditProps {
   card: Card;
@@ -25,9 +26,12 @@ export const CardEdit = (props: CardEditProps) => {
   const onClickUpdateButton = async (id: string) => {
     props.card.back = backText;
     props.card.front = frontText;
-    await fetchApiEditCard("/api/cards", id, props.card); // Todo : add return value evaluation here
+    const success = await fetchApiEditCard("/api/cards", id, props.card);
+    if (!success) {
+      return;
+    }
     dispatch({ type: "update-card", id: id, card: props.card });
-    navigate("/cards"); // allowed ?
+    navigate("/cards");
   };
 
   return (
@@ -44,7 +48,9 @@ export const CardEdit = (props: CardEditProps) => {
         onChange={(e) => setBackText(e.target.value)}
         placeholder="Back"
       />
-      <button onClick={() => onClickUpdateButton(props.card.id)}>Update</button>
+      <StyledButton onClick={() => onClickUpdateButton(props.card.id)}>
+        Update
+      </StyledButton>
     </>
   );
 };
