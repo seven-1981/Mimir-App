@@ -1,23 +1,11 @@
 import { CardListItem } from "./CardListItem";
-import { fetchApiGetCards } from "../utils/fetchApiGetCards";
 import { fetchApiDeleteCard } from "../utils/fetchApiDeleteCard";
 import { CardInput } from "./CardInput";
 import { AppContext } from "../store/context";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 export const CardList = () => {
   const { cards, dispatch } = useContext(AppContext);
-
-  useEffect(() => {
-    const onMount = async () => {
-      const cards = await fetchApiGetCards("/api/cards");
-      if (!cards) {
-        return;
-      }
-      dispatch({ type: "set-cards", cards });
-    };
-    onMount();
-  }, []);
 
   const onClickDeleteButton = async (id: string) => {
     const success = await fetchApiDeleteCard("/api/cards", id, cards);

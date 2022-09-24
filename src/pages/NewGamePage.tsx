@@ -77,25 +77,22 @@ export const NewGamePage = () => {
         console.log("Solve clicked");
     }
 
-    const inputFieldChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
-        setInputText(event.target.value)
-    }
+  const inputFieldChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
+        setInputText(event.target.value);
+  };
 
   return (
       <div>
             <div> Progress: {progress} </div>
-            <button onClick={deleteOnClick}>
-            Delete Game
-            </button>
-            <button onClick={solveOnClick}>
-              Solve #{index}
-            </button>
+            <button onClick={deleteOnClick}>Delete Game</button>
+            <button onClick={solveOnClick}>Solve #{index}</button>
             <div> {card.front} </div>
-            <input type="text" onChange={inputFieldChangeEvent}
-                 value={inputText} placeholder="Answer" />
-            <button onClick={submitOnClick}>
-              Submit
-            </button>
+            <input
+                type="text" 
+                onChange={inputFieldChangeEvent}
+                value={inputText}
+                placeholder="Answer" />
+            <button onClick={submitOnClick}>Submit</button>
       </div>
   )
 };
