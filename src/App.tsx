@@ -7,12 +7,12 @@ import { CardsPage } from "./pages/CardsPage";
 import { CardPage } from "./pages/CardPage";
 import { createGlobalStyle } from "styled-components";
 
-const ROUTE_HOME = "/";
-const ROUTE_CARDS = "/cards";
-const ROUTE_CARD = "/cards/:cardId";
-const ROUTE_GAME = "/game";
-const ROUTE_GAME_RESULT = "/game/result";
-const ROUTE_NOT_FOUND = "*";
+export const ROUTE_HOME = "/";
+export const ROUTE_CARDS = "/cards";
+export const ROUTE_CARD = "/cards/:cardId";
+export const ROUTE_GAME = "/game";
+export const ROUTE_GAME_RESULT = "/game/result";
+export const ROUTE_NOT_FOUND = "*";
 
 function App() {
   const DOH =
