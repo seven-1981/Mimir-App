@@ -1,33 +1,28 @@
 import {ChangeEvent, useContext, useEffect, useState} from "react";
 import {AppContext} from "../store/context";
+import {GameContext} from "../store/gameContext";
 import {fetchApiPostGame} from "../utils/fetchApiPostGame";
+import {useNavigate} from "react-router-dom";
 import {GameCard} from "../models/GameCard";
 import {Game} from "../models/Game";
-import {useNavigate} from "react-router-dom";
 
 export const NewGamePage = () => {
     const {cards} = useContext(AppContext);
+    const {front, cardCount, solved, dispatch} = useContext(GameContext);
     const [index, setIndex] = useState<number>(0);
     const [progress, setProgress] = useState<number>(0);
-    const [card, setCard] = useState<GameCard>({
-        id: "", front: "", back: "", answer: "", accepted: false })
-    const [result, setResult] = useState<GameCard[]>([])
-    const [game, setGame] = useState<Game>({front: "", cardCount: 0, solved: result})
+    const [solvedCards, setSolvedCards] = useState<GameCard[]>([]);
     const [inputText, setInputText] = useState("");
     const navigate = useNavigate();
 
     useEffect( () => {
-        if(cards.length === 0)      return;         // Todo: How to check whether array is empty
+        if(cards.length === 0)      return;
         if(index >= cards.length)   return;
-        const selectedCard = cards[index];
-        const gameCard = {
-            id: selectedCard.id,
-            front: selectedCard.front,
-            back: selectedCard.back,
-            answer: "",
-            accepted: false }
 
-       setCard( gameCard );
+        const selectedCard = cards[index];
+        dispatch({ type: "set-front", front: selectedCard.front });
+        dispatch({ type: "set-cardCount", value: index });
+
        setProgress(Math.round(100*index/cards.length));
     }, [index, cards])
 
@@ -37,26 +32,23 @@ export const NewGamePage = () => {
 
     const submitOnClick = async () => {
         evaluateAnswer();
-        addResultToGameStatus();
         await postGameStatus();
         updateIndex();
     }
 
     const evaluateAnswer = () => {
-        card.answer = inputText;
-        setInputText("");
-        if(cards[index].back ===  card.answer) { card.accepted = true; }
-        else                                   { card.accepted = false;}
-    }
-
-    const addResultToGameStatus = () => {
-        setResult(result => [...result, card]);
-        const currentGame = {
-            front: "???",
-            cardCount: index,
-            solved: result
+        const solvedCard: GameCard = {
+            id: cards[index].id,
+            front: cards[index].front,
+            back: cards[index].back,
+            answer: inputText,
+            accepted: (inputText === cards[index].back)
         }
-        setGame(currentGame);
+        const items= solvedCards;
+        setSolvedCards([...items, solvedCard] );
+        dispatch({ type: "set-solved", solved: solvedCards });
+
+        setInputText("");
     }
 
     const updateIndex = () => {
@@ -64,12 +56,16 @@ export const NewGamePage = () => {
             setIndex(index + 1);
         }
         else {
-            console.log("Navigate to /game/result");
             navigate("/game/result");
         }
     }
 
     const postGameStatus = async () => {
+        const game : Game = {
+            front: front,
+            cardCount: cardCount,
+            solved: solved
+        };
         await fetchApiPostGame( '/api/game', game).then(
             value => {
                 console.log("Post Game Status: " + value);
@@ -90,7 +86,7 @@ export const NewGamePage = () => {
             <div> Progress: {progress} </div>
             <button onClick={deleteOnClick}>Delete Game</button>
             <button onClick={solveOnClick}>Solve #{index}</button>
-            <div> {card.front} </div>
+            <div> {front} </div>
             <input
                 type="text"
                 onChange={inputFieldChangeEvent}
