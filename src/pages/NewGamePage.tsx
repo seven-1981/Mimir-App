@@ -11,8 +11,8 @@ export const NewGamePage = () => {
     const {cards} = useContext(AppContext);
     const {front, cardCount, solved, dispatch} = useContext(GameContext);
     const [index, setIndex] = useState<number>(0);
-    const [progress, setProgress] = useState<number>(0);            // ToDo: To context
-    const [solvedCards, setSolvedCards] = useState<GameCard[]>([]); // ToDo: To context
+    const [progress, setProgress] = useState<number>(0);            // ToDo: move to context
+    const [solvedCards, setSolvedCards] = useState<GameCard[]>([]); // ToDo: move to context
     const [inputText, setInputText] = useState("");
     const navigate = useNavigate();
 
