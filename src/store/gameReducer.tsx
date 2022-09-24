@@ -19,6 +19,13 @@ export function gameReducer(game: runningGame, action: GameAction): runningGame 
                 ...game,
                 solved: action.solved
             };
+        case "clear-game":
+            return {
+                ...game,
+                front: "",
+                cardCount: 0,
+                solved: []
+            };
         default:
             return game;
     }

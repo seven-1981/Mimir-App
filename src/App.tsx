@@ -6,11 +6,11 @@ import { GameResultPage} from "./pages/GameResultPage";
 import { CardsPage } from "./pages/CardsPage";
 import { CardPage } from "./pages/CardPage";
 
-const ROUTE_HOME = "/";
+export const ROUTE_HOME = "/";
 const ROUTE_CARDS = "/cards";
 const ROUTE_CARD = "/cards/:cardId";
 const ROUTE_GAME = "/game";
-const ROUTE_GAME_RESULT = "/game/result";
+export const ROUTE_GAME_RESULT = "/game/result";
 const ROUTE_NOT_FOUND = "*";
 
 function App() {

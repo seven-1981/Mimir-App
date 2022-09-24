@@ -15,5 +15,9 @@ type SetSolved = {
     solved: GameCard[];
 };
 
+type ClearGame = {
+    type: "clear-game"
+}
 
-export type GameAction = SetFront | SetCardCount | SetSolved
+
+export type GameAction = SetFront | SetCardCount | SetSolved | ClearGame

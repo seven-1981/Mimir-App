@@ -1,6 +1,7 @@
 import {ChangeEvent, useContext, useEffect, useState} from "react";
 import {AppContext} from "../store/context";
 import {GameContext} from "../store/gameContext";
+import {ROUTE_GAME_RESULT, ROUTE_HOME} from "../App";
 import {fetchApiPostGame} from "../utils/fetchApiPostGame";
 import {useNavigate} from "react-router-dom";
 import {GameCard} from "../models/GameCard";
@@ -26,28 +27,23 @@ export const NewGamePage = () => {
        setProgress(Math.round(100*index/cards.length));
     }, [index, cards])
 
-    const deleteOnClick = () => {
-        console.log("Delete clicked");
-    }
-
     const submitOnClick = async () => {
-        evaluateAnswer();
+        processAnswer();
         await postGameStatus();
         updateIndex();
     }
 
-    const evaluateAnswer = () => {
+    const processAnswer = () => {
+        const result = (inputText === cards[index].back);
         const solvedCard: GameCard = {
             id: cards[index].id,
             front: cards[index].front,
             back: cards[index].back,
             answer: inputText,
-            accepted: (inputText === cards[index].back)
+            accepted: result
         }
-        const items= solvedCards;
-        setSolvedCards([...items, solvedCard] );
+        setSolvedCards([...solvedCards, solvedCard] );
         dispatch({ type: "set-solved", solved: solvedCards });
-
         setInputText("");
     }
 
@@ -56,7 +52,7 @@ export const NewGamePage = () => {
             setIndex(index + 1);
         }
         else {
-            navigate("/game/result");
+            navigate(ROUTE_GAME_RESULT);
         }
     }
 
@@ -74,7 +70,12 @@ export const NewGamePage = () => {
     }
 
     const solveOnClick = () => {
-        console.log("Solve clicked");
+        console.log("Solve clicked");       // ToDo: Does not belong here
+    }
+
+    const deleteOnClick = () => {
+        dispatch({ type: "clear-game"});
+        navigate(ROUTE_HOME);
     }
 
   const inputFieldChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
