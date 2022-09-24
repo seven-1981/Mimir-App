@@ -1,4 +1,4 @@
-import {Game, runningGame} from "../models/Game";
+import {runningGame} from "../models/Game";
 import {GameAction} from "../models/GameAction";
 
 

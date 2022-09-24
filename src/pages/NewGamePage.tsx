@@ -11,8 +11,8 @@ export const NewGamePage = () => {
     const {cards} = useContext(AppContext);
     const {front, cardCount, solved, dispatch} = useContext(GameContext);
     const [index, setIndex] = useState<number>(0);
-    const [progress, setProgress] = useState<number>(0);
-    const [solvedCards, setSolvedCards] = useState<GameCard[]>([]);
+    const [progress, setProgress] = useState<number>(0);            // ToDo: To context
+    const [solvedCards, setSolvedCards] = useState<GameCard[]>([]); // ToDo: To context
     const [inputText, setInputText] = useState("");
     const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ export const NewGamePage = () => {
 
         const selectedCard = cards[index];
         dispatch({ type: "set-front", front: selectedCard.front });
-        dispatch({ type: "set-cardCount", value: index });
+        dispatch({ type: "set-cardCount", value: (index+1) });
 
        setProgress(Math.round(100*index/cards.length));
     }, [index, cards])
@@ -69,10 +69,6 @@ export const NewGamePage = () => {
         );
     }
 
-    const solveOnClick = () => {
-        console.log("Solve clicked");       // ToDo: Does not belong here
-    }
-
     const deleteOnClick = () => {
         dispatch({ type: "clear-game"});
         navigate(ROUTE_HOME);
@@ -86,7 +82,6 @@ export const NewGamePage = () => {
       <div>
             <div> Progress: {progress} </div>
             <button onClick={deleteOnClick}>Delete Game</button>
-            <button onClick={solveOnClick}>Solve #{index}</button>
             <div> {front} </div>
             <input
                 type="text"
