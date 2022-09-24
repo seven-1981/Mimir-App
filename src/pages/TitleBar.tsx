@@ -13,8 +13,14 @@ export const TitleBar = () => {
             navigate(ROUTE_GAME);
         }
         else {
-           // if()
-            navigate(ROUTE_CARDS);
+            const url = window.location.href;
+            if(url.toString().endsWith(ROUTE_GAME)) {
+                navigate(ROUTE_CARDS);
+            }
+            else {
+                navigate(ROUTE_GAME);
+            }
+
         }
     }
 
