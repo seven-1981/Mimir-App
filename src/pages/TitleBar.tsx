@@ -20,7 +20,6 @@ export const TitleBar = () => {
             else {
                 navigate(ROUTE_GAME);
             }
-
         }
     }
 

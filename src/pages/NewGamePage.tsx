@@ -62,6 +62,7 @@ export const NewGamePage = () => {
             cardCount: cardCount,
             solved: solved
         };
+
         await fetchApiPostGame( '/api/game', game).then(
             value => {
                 console.log("Post Game Status: " + value);
