@@ -3,6 +3,7 @@ import {AppContext} from "../store/context";
 import {fetchApiPostGame} from "../utils/fetchApiPostGame";
 import {GameCard} from "../models/GameCard";
 import {Game} from "../models/Game";
+import {useNavigate} from "react-router-dom";
 
 
 export const NewGamePage = () => {
@@ -59,7 +60,9 @@ export const NewGamePage = () => {
 
     const updateIndex = () => {
         if(index < cards.length) { setIndex(index + 1); }
-        else { /* navigate( "/game/result") */} // Todo: Siehe Kommentar
+        else {
+            navigate( "/game/result");
+        }
     }
 
     const postGameStatus = async () => {
@@ -68,6 +71,10 @@ export const NewGamePage = () => {
                 console.log("Post Game Status: " + value);
             }
         );
+    }
+
+    const solveOnClick = () => {
+        console.log("Solve clicked");
     }
 
     const inputFieldChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
@@ -79,6 +86,9 @@ export const NewGamePage = () => {
             <div> Progress: {progress} </div>
             <button onClick={deleteOnClick}>
             Delete Game
+            </button>
+            <button onClick={solveOnClick}>
+              Solve #{index}
             </button>
             <div> {card.front} </div>
             <input type="text" onChange={inputFieldChangeEvent}
