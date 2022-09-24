@@ -2,9 +2,10 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { NewGamePage } from "./pages/NewGamePage";
-import { GameResultPage} from "./pages/GameResultPage";
+import { GameResultPage } from "./pages/GameResultPage";
 import { CardsPage } from "./pages/CardsPage";
 import { CardPage } from "./pages/CardPage";
+import { createGlobalStyle } from "styled-components";
 
 export const ROUTE_HOME = "/";
 export const ROUTE_CARDS = "/cards";
@@ -19,8 +20,9 @@ function App() {
 
   return (
     <>
+      <GlobalStyle />
       <Routes>
-          <Route path={ROUTE_HOME} element={<HomePage />}>
+        <Route path={ROUTE_HOME} element={<HomePage />}>
           <Route path={ROUTE_GAME} element={<NewGamePage />} />
           <Route path={ROUTE_GAME_RESULT} element={<GameResultPage />} />
           <Route path={ROUTE_CARDS} element={<CardsPage />} />
@@ -38,3 +40,13 @@ function App() {
 }
 
 export default App;
+
+const GlobalStyle = createGlobalStyle`
+* {
+box-sizing: border-box;
+margin: 10;
+}
+body {
+background: #deeaee;
+  font-family: Phantomsans, sans-serif;
+}`;

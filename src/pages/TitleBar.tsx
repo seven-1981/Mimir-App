@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
 import {useContext} from "react";
 import {GameContext} from "../store/gameContext";
 import {useNavigate} from "react-router-dom";
 import {ROUTE_CARDS, ROUTE_GAME} from "../App";
+import {StyledButton, StyledLink, StyledTitle} from "../components/styles";
 
 export const TitleBar = () => {
     const {cardCount} = useContext(GameContext);
@@ -35,12 +35,12 @@ export const TitleBar = () => {
     }
 
   return (
-    <div>
+    <StyledTitle>
       Mimir
-      <Link to={"/game"}>New Game </Link>
-      <button onClick={solveOnClick}>{getButtonString()}</button>
-      <Link to={"/cards"}> Manage Cards</Link>
+      <StyledLink to={"/game"}>New Game </StyledLink>
+      <StyledButton onClick={solveOnClick}>{getButtonString()}</StyledButton>
+      <StyledLink to={"/cards"}> Manage Cards</StyledLink>
       <div> {getGameRunningString()} </div>
-    </div>
+    </StyledTitle>
   );
 };

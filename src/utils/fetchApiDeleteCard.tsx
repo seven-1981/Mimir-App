@@ -5,23 +5,19 @@ export async function fetchApiDeleteCard(
   id: string,
   actualData: Card[]
 ): Promise<boolean> {
-  const deleteAPIData = async () => {
-    const urlWithId = URL + "/" + id;
-    const cardToDelete = actualData.find((card) => {
-      return card.id === id;
+  const urlWithId = URL + "/" + id;
+  const cardToDelete = actualData.find((card) => {
+    return card.id === id;
+  });
+  try {
+    const apiResponse = await fetch(urlWithId, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cardToDelete),
     });
-    try {
-      const apiResponse = await fetch(urlWithId, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cardToDelete),
-      });
-      return apiResponse.ok;
-    } catch (error) {
-      console.log("Error " + error + " during DELETE " + URL);
-      return false;
-    }
-  };
-  const response = await deleteAPIData();
-  return response;
+    return apiResponse.ok;
+  } catch (error) {
+    console.log("Error " + error + " during DELETE " + URL);
+    return false;
+  }
 }
