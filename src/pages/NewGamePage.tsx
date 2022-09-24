@@ -5,7 +5,6 @@ import {GameCard} from "../models/GameCard";
 import {Game} from "../models/Game";
 import {useNavigate} from "react-router-dom";
 
-
 export const NewGamePage = () => {
     const {cards} = useContext(AppContext);
     const [index, setIndex] = useState<number>(0);
@@ -15,9 +14,11 @@ export const NewGamePage = () => {
     const [result, setResult] = useState<GameCard[]>([])
     const [game, setGame] = useState<Game>({front: "", cardCount: 0, solved: result})
     const [inputText, setInputText] = useState("");
+    const navigate = useNavigate();
 
     useEffect( () => {
-        if(cards.length === 0) {return;}         // Todo: How to check whether array is empty
+        if(cards.length === 0)      return;         // Todo: How to check whether array is empty
+        if(index >= cards.length)   return;
         const selectedCard = cards[index];
         const gameCard = {
             id: selectedCard.id,
@@ -59,9 +60,12 @@ export const NewGamePage = () => {
     }
 
     const updateIndex = () => {
-        if(index < cards.length) { setIndex(index + 1); }
+        if(index < (cards.length - 1) ) {
+            setIndex(index + 1);
+        }
         else {
-            navigate( "/game/result");
+            console.log("Navigate to /game/result");
+            navigate("/game/result");
         }
     }
 
@@ -88,7 +92,7 @@ export const NewGamePage = () => {
             <button onClick={solveOnClick}>Solve #{index}</button>
             <div> {card.front} </div>
             <input
-                type="text" 
+                type="text"
                 onChange={inputFieldChangeEvent}
                 value={inputText}
                 placeholder="Answer" />
