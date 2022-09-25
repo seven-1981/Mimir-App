@@ -3,7 +3,7 @@ import { Card } from "../models/Card";
 import { AppContext } from "../store/context";
 import { fetchApiEditCard } from "../utils/fetchApiEditCard";
 import { useNavigate } from "react-router-dom";
-import { StyledButton } from "./styles";
+import { StyledButton, StyledInput, StyledInputForm } from "./styles";
 
 export interface CardEditProps {
   card: Card;
@@ -35,14 +35,14 @@ export const CardEdit = (props: CardEditProps) => {
   };
 
   return (
-    <>
-      <input
+    <StyledInputForm>
+      <StyledInput
         type="text"
         value={frontText}
         onChange={(e) => setFrontText(e.target.value)}
         placeholder="Front"
       />
-      <input
+      <StyledInput
         type="text"
         value={backText}
         onChange={(e) => setBackText(e.target.value)}
@@ -51,6 +51,6 @@ export const CardEdit = (props: CardEditProps) => {
       <StyledButton onClick={() => onClickUpdateButton(props.card.id)}>
         Update
       </StyledButton>
-    </>
+    </StyledInputForm>
   );
 };

@@ -3,6 +3,7 @@ import { fetchApiDeleteCard } from "../utils/fetchApiDeleteCard";
 import { CardInput } from "./CardInput";
 import { AppContext } from "../store/context";
 import { useContext } from "react";
+import { StyledLabel } from "./styles";
 
 export const CardList = () => {
   const { cards, dispatch } = useContext(AppContext);
@@ -18,8 +19,8 @@ export const CardList = () => {
   return (
     <>
       <CardInput />
-      <p>{!cards && "NO CARDS FOUND"}</p>
-      <ul>
+      <StyledLabel>{!cards && "NO CARDS FOUND"}</StyledLabel>
+      <div>
         {cards &&
           cards.map((card) => {
             return (
@@ -30,7 +31,7 @@ export const CardList = () => {
               />
             );
           })}
-      </ul>
+      </div>
     </>
   );
 };

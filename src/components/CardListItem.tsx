@@ -1,5 +1,10 @@
 import { Card } from "../models/Card";
-import { StyledCardList, StyledButton, StyledLink } from "./styles";
+import {
+  StyledCardList,
+  StyledButton,
+  StyledLink,
+  StyledLabel,
+} from "./styles";
 
 export interface CardListItemProps {
   card: Card;
@@ -11,15 +16,13 @@ export const CardListItem = ({
   onClickDeleteButton,
 }: CardListItemProps) => {
   return (
-    <>
-      <StyledCardList>
-        <p>{card.front}</p>
-        <p>{card.back}</p>
-        <StyledLink to={card.id}>Edit</StyledLink>
-        <StyledButton onClick={() => onClickDeleteButton(card.id)}>
-          Delete
-        </StyledButton>
-      </StyledCardList>
-    </>
+    <StyledCardList>
+      <StyledLabel>{card.front}</StyledLabel>
+      <StyledLabel>{card.back}</StyledLabel>
+      <StyledLink to={card.id}>Edit</StyledLink>
+      <StyledButton onClick={() => onClickDeleteButton(card.id)}>
+        Delete
+      </StyledButton>
+    </StyledCardList>
   );
 };
