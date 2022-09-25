@@ -1,11 +1,36 @@
 import styled, { css } from "styled-components/macro";
 import { Link } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
 
-export const StyledTitle = styled.div`
+const Background = css`
+  min-height: 100vh;
+  font-family: Phantomsans, sans-serif;
+  background: rgb(225,248,251);
+  background: linear-gradient(331deg, 
+  rgba(225,248,251,1) 0%, 
+  rgba(212,229,232,1) 53%, 
+  rgba(199,210,214,1) 100%);
+}
+`;
+
+export const GlobalStyle = createGlobalStyle`
+* {
+box-sizing: border-box;
+margin: 10;
+}
+body {
+${Background};
+}`;
+
+export const StyledTitleBar = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin: 10px;
+`;
+
+export const StyledLabel = styled.label`
+  font-size: 24px;
 `;
 
 export const StyledCardList = styled.div`

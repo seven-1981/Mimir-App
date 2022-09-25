@@ -5,7 +5,7 @@ import { NewGamePage } from "./pages/NewGamePage";
 import { GameResultPage } from "./pages/GameResultPage";
 import { CardsPage } from "./pages/CardsPage";
 import { CardPage } from "./pages/CardPage";
-import { createGlobalStyle } from "styled-components";
+import { GlobalStyle } from "./components/styles";
 
 export const ROUTE_HOME = "/";
 export const ROUTE_CARDS = "/cards";
@@ -40,13 +40,3 @@ function App() {
 }
 
 export default App;
-
-const GlobalStyle = createGlobalStyle`
-* {
-box-sizing: border-box;
-margin: 10;
-}
-body {
-background: #deeaee;
-  font-family: Phantomsans, sans-serif;
-}`;
