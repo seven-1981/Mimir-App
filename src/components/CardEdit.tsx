@@ -26,7 +26,7 @@ export const CardEdit = (props: CardEditProps) => {
   const onClickUpdateButton = async (id: string) => {
     props.card.back = backText;
     props.card.front = frontText;
-    const success = await fetchApiEditCard("/api/cards", id, props.card);
+    const success = await fetchApiEditCard("/api/cards", id);
     if (!success) {
       return;
     }

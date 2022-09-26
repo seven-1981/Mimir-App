@@ -8,7 +8,7 @@ export const CardList = () => {
   const { cards, dispatch } = useContext(AppContext);
 
   const onClickDeleteButton = async (id: string) => {
-    const success = await fetchApiDeleteCard("/api/cards", id, cards);
+    const success = await fetchApiDeleteCard("/api/cards", id);
     if (!success) {
       return;
     }
