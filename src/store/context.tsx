@@ -20,9 +20,10 @@ export const AppProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const onMount = async () => {
-      const cards = await fetchApiGetCards("/api/cards");
-      if (!cards) {
-        return; // ToDo: Was bei Failure ?
+      const { cards, success } = await fetchApiGetCards("/api/cards");
+      if (!success) {
+        console.log("Error during fetching of card list!");
+        return;
       }
       dispatch({ type: "set-cards", cards });
     };
