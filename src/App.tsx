@@ -1,10 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
-import { NewGamePage } from "./pages/NewGamePage";
-import { GameResultPage} from "./pages/GameResultPage";
+import { GamePage } from "./pages/GamePage";
+import { GameResultPage } from "./pages/GameResultPage";
 import { CardsPage } from "./pages/CardsPage";
 import { CardPage } from "./pages/CardPage";
+import { GlobalStyle } from "./components/styles";
 
 export const ROUTE_HOME = "/";
 export const ROUTE_CARDS = "/cards";
@@ -19,9 +20,10 @@ function App() {
 
   return (
     <>
+      <GlobalStyle />
       <Routes>
-          <Route path={ROUTE_HOME} element={<HomePage />}>
-          <Route path={ROUTE_GAME} element={<NewGamePage />} />
+        <Route path={ROUTE_HOME} element={<HomePage />}>
+          <Route path={ROUTE_GAME} element={<GamePage />} />
           <Route path={ROUTE_GAME_RESULT} element={<GameResultPage />} />
           <Route path={ROUTE_CARDS} element={<CardsPage />} />
           <Route path={ROUTE_CARD} element={<CardPage />} />

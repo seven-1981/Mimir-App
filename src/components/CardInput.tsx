@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { fetchApiPost } from "../utils/fetchApiPost";
 import { createCard } from "../models/Card";
 import { AppContext } from "../store/context";
+import { StyledButton, StyledInput, StyledInputForm } from "./styles";
 
 export const CardInput = () => {
   const { cards, dispatch } = useContext(AppContext);
@@ -34,20 +35,20 @@ export const CardInput = () => {
   };
 
   return (
-    <>
-      <input
+    <StyledInputForm>
+      <StyledInput
         type="text"
         value={frontText}
         onChange={(e) => setFrontText(e.target.value)}
         placeholder="Front"
       />
-      <input
+      <StyledInput
         type="text"
         value={backText}
         onChange={(e) => setBackText(e.target.value)}
         placeholder="Back"
       />
-      <button onClick={() => onClickAddButton()}>Add</button>
-    </>
+      <StyledButton onClick={() => onClickAddButton()}>Add</StyledButton>
+    </StyledInputForm>
   );
 };

@@ -1,14 +1,21 @@
 import { Card } from "../models/Card";
 
-export const fetchApiGetCards = async (URL: string): Promise<Card[]> => {
+export interface ApiGetCardsResponse {
+  cards: Card[];
+  success: boolean;
+}
+
+export async function fetchApiGetCards(
+  URL: string
+): Promise<ApiGetCardsResponse> {
   try {
     const apiResponse = await fetch(URL);
     if (apiResponse.ok) {
       const jsonData = await apiResponse.json();
-      return jsonData;
+      return { cards: jsonData, success: true };
     }
   } catch (error) {
     console.log("Error " + error + " during GET " + URL);
   }
-  return []; // Todo: Should we be able to distinguish between empty and error here ?
-};
+  return { cards: [], success: false };
+}
