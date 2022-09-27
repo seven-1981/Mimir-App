@@ -10,15 +10,12 @@ export const RunningGame = () => {
     const { front, cardCount, solved, dispatch } = useContext(GameContext);
     const [index, setIndex] = useState<number>(0);
     const [progress, setProgress] = useState<number>(0); // ToDo: move to context
-    const [solvedCards, setSolvedCards] = useState<GameCard[]>([]); // ToDo: move to context
+    const [solvedCards, setSolvedCards] = useState<GameCard[]>(solved); // ToDo: move to context
     const [inputText, setInputText] = useState("");
 
     useEffect(() => {
-        console.log("Solved0 " + solved[0].front);
-        console.log("Solved1 " + solved[1].front);
-        console.log("Solved2 " + solved[2].front);
 
-        dispatch({ type: "set-front", front: solved[index].front });
+        dispatch({ type: "set-front", front: solvedCards[index].front });
         dispatch({ type: "set-cardCount", value: index + 1 });
         setProgress(Math.round((100 * index) / NUMBER_OF_CARDS));
 
