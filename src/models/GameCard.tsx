@@ -1,7 +1,7 @@
 export interface GameCard {
-    id: String;
-    front: String;
-    back: String;
-    answer: String;
+    id: string;
+    front: string;
+    back: string;
+    answer: string;
     accepted: boolean;
 }

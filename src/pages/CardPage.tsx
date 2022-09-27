@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { CardEdit } from "../components/CardEdit";
+import { CardEdit } from "../components/Card/CardEdit";
 import { AppContext } from "../store/context";
 import { useContext } from "react";
 import { Card } from "../models/Card";
