@@ -10,7 +10,7 @@ export const GamePage = () => {
 
     if(cardCount === 0) {
         return ( <StartGame/> );
-    } else if (cardCount === NUMBER_OF_CARDS) {
+    } else if (cardCount > NUMBER_OF_CARDS) {
         return ( <GameResult/> );
     } else {
         return ( <RunningGame/> );

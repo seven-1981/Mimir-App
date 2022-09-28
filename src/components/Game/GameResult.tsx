@@ -1,5 +1,6 @@
 import {useContext} from "react";
 import {GameContext} from "../../store/gameContext";
+import {StyledLabel} from "../styles";
 
 
 export const GameResult = () => {
@@ -8,20 +9,20 @@ export const GameResult = () => {
     return (
         <div>
             <div>
-                <label> Front </label> <label> Back </label>
-                <label> Your Answer </label> <label> Accepted </label>
+                <StyledLabel> Front </StyledLabel> <StyledLabel> Back </StyledLabel>
+                <StyledLabel> Your Answer </StyledLabel> <StyledLabel> Accepted </StyledLabel>
             </div>
             <div>
-                <label> {solved[1].front} </label> <label> {solved[1].back} </label>
-                <label> {solved[1].answer} </label> <label> {solved[1].accepted} </label>
+                <StyledLabel> {solved[1].front} </StyledLabel> <StyledLabel> {solved[1].back} </StyledLabel>
+                <StyledLabel> {solved[1].answer} </StyledLabel> <StyledLabel> {solved[1].accepted} </StyledLabel>
             </div>
             <div>
-                <label> {solved[2].front} </label> <label> {solved[2].back} </label>
-                <label> {solved[2].answer} </label> <label> {solved[2].accepted} </label>
+                <StyledLabel> {solved[2].front} </StyledLabel> <StyledLabel> {solved[2].back} </StyledLabel>
+                <StyledLabel> {solved[2].answer} </StyledLabel> <StyledLabel> {solved[2].accepted} </StyledLabel>
             </div>
             <div>
-                <label> {solved[3].front} </label> <label> {solved[3].back} </label>
-                <label> {solved[3].answer} </label> <label> {solved[3].accepted} </label>
+                <StyledLabel> {solved[3].front} </StyledLabel> <StyledLabel> {solved[3].back} </StyledLabel>
+                <StyledLabel> {solved[3].answer} </StyledLabel> <StyledLabel> {solved[3].accepted} </StyledLabel>
             </div>
         </div>
     )
