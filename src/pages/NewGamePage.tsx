@@ -2,10 +2,10 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { AppContext } from "../store/context";
 import { GameContext } from "../store/gameContext";
 import { ROUTE_GAME_RESULT, ROUTE_HOME } from "../App";
-import { fetchApiPostGame } from "../utils/fetchApiPostGame";
 import { useNavigate } from "react-router-dom";
 import { GameCard } from "../models/GameCard";
 import { Game } from "../models/Game";
+import { fetchApiPost } from "../utils/fetchApiPost";
 
 export const NewGamePage = () => {
   const { cards } = useContext(AppContext);
@@ -61,9 +61,7 @@ export const NewGamePage = () => {
       cardCount: cardCount,
       solved: solved,
     };
-    await fetchApiPostGame("/api/game", game).then((value) => {
-      console.log("Post Game Status: " + value);
-    });
+    await fetchApiPost<Game>("/api/game", game);
   };
 
   const deleteOnClick = () => {

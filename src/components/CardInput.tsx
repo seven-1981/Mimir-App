@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { fetchApiPost } from "../utils/fetchApiPost";
-import { createCard } from "../models/Card";
+import { Card, createCard } from "../models/Card";
 import { AppContext } from "../store/context";
 import { StyledButton, StyledInput, StyledInputForm } from "./styles";
 
@@ -25,7 +25,7 @@ export const CardInput = () => {
     if (isCardEmpty(frontText, backText)) return;
     if (cardExists(frontText, backText)) return;
     const newCard = createCard(frontText, backText);
-    const success = await fetchApiPost("/api/cards", newCard);
+    const success = await fetchApiPost<Card>("/api/cards", newCard);
     if (!success) {
       return;
     }
