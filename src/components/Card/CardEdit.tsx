@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { Card } from "../models/Card";
-import { AppContext } from "../store/context";
-import { fetchApiEditCard } from "../utils/fetchApiEditCard";
+import { Card } from "../../models/Card";
+import { AppContext } from "../../store/context";
+import { fetchApiEditCard } from "../../utils/fetchApiEditCard";
 import { useNavigate } from "react-router-dom";
-import { StyledButton, StyledInput, StyledInputForm } from "./styles";
+import { StyledButton, StyledInput, StyledInputForm } from "../styles";
 
 export interface CardEditProps {
   card: Card;

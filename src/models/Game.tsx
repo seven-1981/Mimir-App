@@ -1,8 +1,10 @@
 import {GameCard} from "./GameCard";
 import {GameAction} from "./GameAction";
 
+export const NUMBER_OF_CARDS = 3;
+
 export interface Game {
-    front: String;
+    front: string;
     cardCount: number;
     solved: GameCard[];
 }

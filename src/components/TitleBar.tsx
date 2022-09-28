@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { GameContext } from "../store/gameContext";
 import { useNavigate } from "react-router-dom";
-import { ROUTE_CARDS, ROUTE_GAME } from "../App";
+import { ROUTE_CARDS, ROUTE_HOME } from "../App";
 import {
   StyledButton,
   StyledLabel,
@@ -16,13 +16,13 @@ export const TitleBar = () => {
   const onClickSolveButton = () => {
     console.log("Value of cardCount: " + cardCount);
     if (cardCount === 0) {
-      navigate(ROUTE_GAME);
+      navigate(ROUTE_HOME);
     } else {
       const url = window.location.href;
-      if (url.toString().endsWith(ROUTE_GAME)) {
+      if (url.toString().endsWith(ROUTE_HOME)) {
         navigate(ROUTE_CARDS);
       } else {
-        navigate(ROUTE_GAME);
+        navigate(ROUTE_HOME);
       }
     }
   };

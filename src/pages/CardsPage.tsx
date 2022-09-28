@@ -1,4 +1,4 @@
-import { CardList } from "../components/CardList";
+import { CardList } from "../components/Card/CardList";
 
 export const CardsPage = () => {
   return (

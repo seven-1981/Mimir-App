@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
-import { fetchApiPost } from "../utils/fetchApiPost";
-import { createCard } from "../models/Card";
-import { AppContext } from "../store/context";
-import { StyledButton, StyledInput, StyledInputForm } from "./styles";
+import { fetchApiPost } from "../../utils/fetchApiPost";
+import { createCard } from "../../models/Card";
+import { AppContext } from "../../store/context";
+import { StyledButton, StyledInput, StyledInputForm } from "../styles";
 
 export const CardInput = () => {
   const { cards, dispatch } = useContext(AppContext);
