@@ -1,8 +1,8 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { GameContext } from "../../store/gameContext";
 import { NUMBER_OF_CARDS } from "../../models/Game";
-import { fetchApiPostPatchGame } from "../../utils/fetchApiGameHandling";
-import { fetchApiGetGame } from "../../utils/fetchApiGameHandling";
+import { fetchApiPostPatchGame } from "../../utils/fetchApiPostPatchGame";
+import { fetchApiGetGame } from "../../utils/fetchApiPostPatchGame";
 import { GameCard } from "../../models/GameCard";
 import { Game } from "../../models/Game";
 import {

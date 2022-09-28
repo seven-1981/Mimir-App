@@ -1,7 +1,7 @@
 import { StyledButton, StyledLabel, StyledInputForm } from "../styles";
 import { useContext } from "react";
 import { AppContext } from "../../store/context";
-import { fetchApiPostPatchGame } from "../../utils/fetchApiGameHandling";
+import { fetchApiPostPatchGame } from "../../utils/fetchApiPostPatchGame";
 import { Game, NUMBER_OF_CARDS } from "../../models/Game";
 import { GameCard } from "../../models/GameCard";
 import { GameContext } from "../../store/gameContext";

@@ -1,8 +1,6 @@
-import { Card } from "../models/Card";
-
-export async function fetchApiPost(
+export async function fetchApiPost<T>(
   URL: string,
-  dataToAdd: Card
+  dataToAdd: T
 ): Promise<boolean> {
   try {
     const apiResponse = await fetch(URL, {

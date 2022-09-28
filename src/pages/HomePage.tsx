@@ -1,12 +1,10 @@
-import { Outlet } from "react-router-dom";
 import { TitleBar } from "../components/TitleBar";
-import {GamePage} from "./GamePage";
+import { Outlet } from "react-router-dom";
 
 export const HomePage = () => {
   return (
     <div>
       <TitleBar />
-        <GamePage />
       <Outlet />
     </div>
   );
