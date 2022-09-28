@@ -1,10 +1,10 @@
-import { Card } from "../models/Card";
+import { Card } from "../../models/Card";
 import {
   StyledCardList,
   StyledButton,
   StyledLink,
   StyledLabel,
-} from "./styles";
+} from "../styles";
 
 export interface CardListItemProps {
   card: Card;

@@ -1,9 +1,9 @@
-import { CardListItem } from "./CardListItem";
-import { fetchApiDeleteCard } from "../utils/fetchApiDeleteCard";
+import { fetchApiDeleteCard } from "../../utils/fetchApiDeleteCard";
 import { CardInput } from "./CardInput";
-import { AppContext } from "../store/context";
+import { AppContext } from "../../store/context";
 import { useContext } from "react";
-import { StyledLabel } from "./styles";
+import { StyledLabel } from "../styles";
+import {CardListItem} from "./CardListItem";
 
 export const CardList = () => {
   const { cards, dispatch } = useContext(AppContext);
