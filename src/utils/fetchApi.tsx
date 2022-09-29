@@ -3,11 +3,11 @@ export type HttpMethod = "DELETE" | "PUT" | "POST" | "PATCH";
 export async function fetchApi(
   URL: string,
   httpMethod: HttpMethod,
-  id: string
+  id?: string
 ): Promise<boolean> {
-  const urlWithId = URL + "/" + id;
+  const fetchUrl = URL + (id ? "/" + id : "");
   try {
-    const apiResponse = await fetch(urlWithId, {
+    const apiResponse = await fetch(fetchUrl, {
       method: httpMethod,
       headers: { "Content-Type": "application/json" },
     });
