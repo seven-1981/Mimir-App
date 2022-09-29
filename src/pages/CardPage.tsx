@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import { CardEdit } from "../components/Card/CardEdit";
 import { AppContext } from "../store/context";
 import { useContext } from "react";
 import { Card } from "../models/Card";
+import { CardInput } from "../components/Card/CardInput";
 
 export const CardPage = () => {
   const { cardId } = useParams<string>();
@@ -25,7 +25,7 @@ export const CardPage = () => {
   } else {
     return (
       <div>
-        <CardEdit card={foundCard} />
+        <CardInput card={foundCard} />
       </div>
     );
   }
