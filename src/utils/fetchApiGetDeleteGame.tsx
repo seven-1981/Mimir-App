@@ -10,8 +10,10 @@ export async function fetchApiGetGame(
 ): Promise<ApiGetGameResponse> {
   try {
     const apiResponse = await fetch(URL);
+    console.log(apiResponse);
     if (apiResponse.ok) {
       const jsonData = await apiResponse.json();
+      console.log(jsonData);
       return { game: jsonData, success: true };
     }
   } catch (error) {

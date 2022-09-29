@@ -5,6 +5,7 @@ import { fetchApiPostPatchGame } from "../../utils/fetchApiPostPatchGame";
 import { Game, NUMBER_OF_CARDS } from "../../models/Game";
 import { GameCard } from "../../models/GameCard";
 import { GameContext } from "../../store/gameContext";
+import { fetchApiPost } from "../../utils/fetchApiPost";
 
 export const StartGame = () => {
   const { cards } = useContext(AppContext);
@@ -18,8 +19,13 @@ export const StartGame = () => {
       solved: gameCards,
     };
     dispatch({ type: "set-cardCount", value: game.cardCount });
+    console.log("Start Game front: " + game.front);
+    console.log("Start Game cardCount: " + game.cardCount);
+    console.log("Start Game solved 0: " + game.solved[0].front);
+    console.log("Start Game solved 1: " + game.solved[1].front);
+    console.log("Start Game solved 2: " + game.solved[2].front);
 
-    await fetchApiPostPatchGame("/api/game", game, true).then((value) => {
+    await fetchApiPost("/api/game", game).then((value) => {
       console.log("Post Game Status: " + value);
     });
   };
@@ -35,7 +41,7 @@ export const StartGame = () => {
         answer: "",
         accepted: false,
       };
-      gameCards.push(gameCard);
+      gameCards[i] = gameCard;
     }
     return gameCards;
   };

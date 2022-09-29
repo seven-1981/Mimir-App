@@ -3,6 +3,8 @@ export async function fetchApiPost<T>(
   dataToAdd: T
 ): Promise<boolean> {
   try {
+    console.log(dataToAdd);
+    console.log(JSON.stringify(dataToAdd));
     const apiResponse = await fetch(URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
