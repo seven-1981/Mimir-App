@@ -1,51 +1,27 @@
 import { StyledButton, StyledLabel, StyledInputForm } from "../styles";
+import { fetchApi } from "../../utils/fetchApi";
 import { useContext } from "react";
 import { AppContext } from "../../store/context";
-import { fetchApiWithData } from "../../utils/fetchApi";
-import { Game, NUMBER_OF_CARDS } from "../../models/Game";
-import { GameCard } from "../../models/GameCard";
-import { GameContext } from "../../store/gameContext";
 
 export const StartGame = () => {
-  const { cards } = useContext(AppContext);
-  const { dispatch } = useContext(GameContext);
+  const { cardCount, dispatch } = useContext(AppContext);
 
-  const startOnClick = async () => {
-    const gameCards = chooseCards();
-    const game: Game = {
-      front: gameCards[0].front,
-      cardCount: 1,
-      solved: gameCards,
-    };
-    dispatch({ type: "set-front", front: game.front });
-    dispatch({ type: "set-cardCount", value: game.cardCount });
-    dispatch({ type: "set-solved", solved: game.solved });
-
-    await fetchApiWithData<Game>("/api/game", "POST", game).then((value) => {
-      console.log("Post Game Status: " + value);
-    });
-  };
-
-  const chooseCards = (): GameCard[] => {
-    const gameCards: GameCard[] = [];
-    // ToDo: Random index within number of cards
-    for (let i = 0; i < NUMBER_OF_CARDS; i++) {
-      const gameCard: GameCard = {
-        id: cards[i].id,
-        front: cards[i].front,
-        back: cards[i].back,
-        answer: "",
-        accepted: false,
-      };
-      gameCards.push(gameCard);
+  const onClickStartButton = async () => {
+    if (cardCount === 0) {
+      const success = fetchApi("/api/game", "POST");
+      if (!success) {
+        return;
+      }
+      dispatch({ type: "update-cardCount", cardCount: 1 });
     }
-    return gameCards;
   };
 
   return (
     <div>
       <StyledInputForm>
-        <StyledButton onClick={startOnClick}>Start new Game</StyledButton>
+        <StyledButton onClick={() => onClickStartButton()}>
+          Start new Game
+        </StyledButton>
       </StyledInputForm>
       <StyledInputForm>
         <StyledLabel>No game running </StyledLabel>

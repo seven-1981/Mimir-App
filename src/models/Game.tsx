@@ -1,14 +1,9 @@
-import {GameCard} from "./GameCard";
-import {GameAction} from "./GameAction";
+import { GameCard } from "./GameCard";
 
 export const NUMBER_OF_CARDS = 3;
 
 export interface Game {
-    front: string;
-    cardCount: number;
-    solved: GameCard[];
-}
-
-export interface runningGame extends Game{
-    dispatch: (action: GameAction) => void
+  front: string;
+  cardCount: number;
+  solved: GameCard[];
 }

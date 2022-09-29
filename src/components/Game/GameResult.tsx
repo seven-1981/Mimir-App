@@ -1,29 +1,40 @@
-import {useContext} from "react";
-import {GameContext} from "../../store/gameContext";
-
+import { Game } from "../../models/Game";
+import { fetchApiGetGame } from "../../utils/fetchApiGetCards";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../../store/context";
+import { ResultsTable } from "./ResultsTable";
 
 export const GameResult = () => {
-    const {solved} = useContext(GameContext);
+  const { cardCount, dispatch } = useContext(AppContext);
 
-    return (
-        <div>
-            <div>
-                <label> Front </label> <label> Back </label>
-                <label> Your Answer </label> <label> Accepted </label>
-            </div>
-            <div>
-                <label> {solved[1].front} </label> <label> {solved[1].back} </label>
-                <label> {solved[1].answer} </label> <label> {solved[1].accepted} </label>
-            </div>
-            <div>
-                <label> {solved[2].front} </label> <label> {solved[2].back} </label>
-                <label> {solved[2].answer} </label> <label> {solved[2].accepted} </label>
-            </div>
-            <div>
-                <label> {solved[3].front} </label> <label> {solved[3].back} </label>
-                <label> {solved[3].answer} </label> <label> {solved[3].accepted} </label>
-            </div>
-        </div>
-    )
-}
+  const [thisGame, setGame] = useState<Game>({
+    front: "",
+    cardCount: 0,
+    solved: [],
+  });
 
+  const [fetched, setFetched] = useState(false);
+
+  useEffect(() => {
+    fetchGame().then((game) => {
+      console.log(game);
+      setGame(game);
+      setFetched(true);
+      console.log("LOADED");
+    });
+  }, [fetched]);
+
+  const fetchGame = async (): Promise<Game> => {
+    const { game, success } = await fetchApiGetGame("/api/game");
+    if (!success) {
+      return { front: "", cardCount: 0, solved: [] };
+    }
+    return game;
+  };
+
+  if (fetched) {
+    return <ResultsTable game={thisGame} />;
+  } else {
+    return <div>Results loading...</div>;
+  }
+};

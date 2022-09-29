@@ -1,8 +1,4 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { GameContext } from "../../store/gameContext";
-import { NUMBER_OF_CARDS } from "../../models/Game";
-import { fetchApiWithData } from "../../utils/fetchApi";
-import { GameCard } from "../../models/GameCard";
 import { Game } from "../../models/Game";
 import {
   StyledInput,
@@ -10,69 +6,53 @@ import {
   StyledLabel,
   StyledInputForm,
 } from "../styles";
+import { AppContext } from "../../store/context";
+import { fetchApiGetGame } from "../../utils/fetchApiGetCards";
+import { fetchApi, fetchApiWithData } from "../../utils/fetchApi";
+import { Answer } from "../../models/Answer";
 
 export const RunningGame = () => {
-  const { front, cardCount, solved, dispatch } = useContext(GameContext);
-  const [index, setIndex] = useState<number>(0);
-  const [progress, setProgress] = useState<number>(0); // ToDo: move to context
-  const [solvedCards, setSolvedCards] = useState<GameCard[]>(solved); // ToDo: move to context
+  const { cardCount, dispatch } = useContext(AppContext);
   const [inputText, setInputText] = useState("");
+  const [game, setGame] = useState<Game>({
+    front: "",
+    cardCount: 0,
+    solved: [],
+  });
+
+  const index = cardCount - 1;
+  const progress = (index / 3) * 100;
 
   useEffect(() => {
-    dispatch({ type: "set-front", front: solved[index].front });
-    dispatch({ type: "set-cardCount", value: index + 1 });
-    setProgress(Math.round((100 * index) / NUMBER_OF_CARDS));
-  }, [index]);
+    fetchGame().then((game) => setGame(game));
+  }, [cardCount]);
 
-  const submitOnClick = async () => {
-    processAnswer();
-    await patchGameStatus();
-    updateIndex();
+  const fetchGame = async (): Promise<Game> => {
+    if (cardCount === 0) return { front: "", cardCount: 0, solved: [] };
+    const { game, success } = await fetchApiGetGame("/api/game");
+    if (!success) {
+      return { front: "", cardCount: 0, solved: [] };
+    }
+    return game;
   };
 
-  const processAnswer = () => {
-    const result = inputText === solved[index].back;
-    console.log("Result: " + solved[index].back);
-    console.log("Result bool: " + result);
-    const solvedCard: GameCard = {
-      id: solved[index].id,
-      front: solved[index].front,
-      back: solved[index].back,
+  const onClickSubmitButton = async () => {
+    const success = await fetchApiWithData<Answer>("/api/game", "PATCH", {
       answer: inputText,
-      accepted: result,
-    };
-    setSolvedCards([...solvedCards, solvedCard]);
-    dispatch({ type: "set-solved", solved: solvedCards });
-    setInputText("");
-  };
-
-  const updateIndex = () => {
-    setIndex(index + 1);
-  };
-
-  const patchGameStatus = async () => {
-    const game: Game = {
-      front: front,
-      cardCount: cardCount,
-      solved: solved,
-    };
-    await fetchApiWithData<string>(
-      "/api/game",
-      "PATCH",
-      game.solved[game.cardCount].answer
-    ).then((value) => {
-      console.log("Patch Game Status: " + value);
     });
+    if (success) {
+      const newCardCount = cardCount + 1;
+      console.log("New card count value is now " + newCardCount);
+      dispatch({ type: "update-cardCount", cardCount: newCardCount });
+      setInputText("");
+    }
   };
 
-  const deleteOnClick = () => {
-    dispatch({ type: "clear-game" });
-    setIndex(0);
-    setProgress(0);
-  };
-
-  const inputFieldChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputText(event.target.value);
+  const deleteOnClick = async () => {
+    const success = await fetchApi("/api/game", "DELETE");
+    if (success) {
+      dispatch({ type: "update-cardCount", cardCount: 0 });
+    }
   };
 
   // ToDo: Styling of front of card
@@ -83,16 +63,18 @@ export const RunningGame = () => {
         <StyledButton onClick={deleteOnClick}>Delete Game</StyledButton>
       </StyledInputForm>
       <StyledInputForm>
-        <StyledLabel> {front} </StyledLabel>
+        <StyledLabel> {game.front} </StyledLabel>
       </StyledInputForm>
       <StyledInputForm>
         <StyledInput
           type="text"
-          onChange={inputFieldChangeEvent}
+          onChange={(event) => setInputText(event.target.value)}
           value={inputText}
           placeholder="Answer"
         />
-        <StyledButton onClick={submitOnClick}>Submit</StyledButton>
+        <StyledButton onClick={() => onClickSubmitButton()}>
+          Submit
+        </StyledButton>
       </StyledInputForm>
     </div>
   );

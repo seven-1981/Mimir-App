@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { GameContext } from "../store/gameContext";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_CARDS, ROUTE_HOME } from "../App";
 import {
@@ -8,9 +7,10 @@ import {
   StyledLink,
   StyledTitleBar,
 } from "./styles";
+import { AppContext } from "../store/context";
 
 export const TitleBar = () => {
-  const { cardCount } = useContext(GameContext);
+  const { cardCount } = useContext(AppContext);
   const navigate = useNavigate();
 
   const onClickSolveButton = () => {
