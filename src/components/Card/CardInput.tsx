@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { fetchApiPost } from "../../utils/fetchApiPost";
+import { fetchApiWithData } from "../../utils/fetchApi";
 import { Card, createCard } from "../../models/Card";
 import { AppContext } from "../../store/context";
 import { StyledButton, StyledInput, StyledInputForm } from "../styles";
 import { useNavigate } from "react-router-dom";
-import { fetchApiEditCard } from "../../utils/fetchApiEditCard";
+import { fetchApi } from "../../utils/fetchApi";
 
 export interface CardInputProps {
   card?: Card;
@@ -42,7 +42,7 @@ export const CardInput = (props: CardInputProps) => {
   const onClickAddButton = async () => {
     if (cardExistsOrEmpty(frontText, backText)) return;
     const newCard = createCard(frontText, backText);
-    const success = await fetchApiPost<Card>("/api/cards", newCard);
+    const success = await fetchApiWithData<Card>("/api/cards", "POST", newCard);
     if (!success) {
       return;
     }
@@ -57,7 +57,7 @@ export const CardInput = (props: CardInputProps) => {
       props.card.back = backText;
       props.card.front = frontText;
 
-      const success = await fetchApiEditCard("/api/cards", id);
+      const success = await fetchApi("/api/cards", "PUT", id);
       if (!success) {
         return;
       }
