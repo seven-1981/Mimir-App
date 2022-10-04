@@ -1,15 +1,16 @@
-import { ApiState } from "../models/ApiState";
-import { Action } from "../models/Action";
+import { AppState } from "../models/ApiState";
 import { createContext, ReactNode, useEffect, useReducer } from "react";
 import { apiReducer } from "./apiReducer";
 import { fetchApiGetCards } from "../utils/fetchApiGetCards";
+import { Action } from "../models/Action";
 
-export const initialState: ApiState = {
-  cards: [],
+export const initialState: AppState = {
   dispatch: (action: Action) => {},
+  cards: [],
+  cardCount: 0,
 };
 
-export const AppContext = createContext<ApiState>(initialState);
+export const AppContext = createContext<AppState>(initialState);
 
 interface Props {
   children: ReactNode;
