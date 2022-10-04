@@ -1,5 +1,12 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { GameContext } from "../../store/gameContext";
+import { fetchApiWithData } from "../../utils/fetchApi";
+import {
+  fetchApiGetGame,
+  fetchApiPatchAnswer,
+} from "../../utils/fetchApiGetDeleteGame";
+import { fetchApi } from "../../utils/fetchApi";
+import { GameAnswer } from "../../models/GameAnswer";
 import { initialGameState, NUMBER_OF_CARDS } from "../../models/Game";
 import { Game } from "../../models/Game";
 import {
@@ -8,9 +15,6 @@ import {
   StyledLabel,
   StyledInputForm,
 } from "../styles";
-import { fetchApiPatchAnswer } from "../../utils/fetchApiPostGame";
-import { fetchApiGetGame } from "../../utils/fetchApiGetDeleteGame";
-import { fetchApi } from "../../utils/fetchApi";
 
 export const RunningGame = () => {
   const { dispatch } = useContext(GameContext);
@@ -39,7 +43,13 @@ export const RunningGame = () => {
   };
 
   const updateGameStatus = async () => {
-    const { game, success } = await fetchApiPatchAnswer("/api/game", inputText);
+    const currentAnswer: GameAnswer = {
+      answer: inputText,
+    };
+    const { game, success } = await fetchApiPatchAnswer(
+      "/api/game",
+      currentAnswer
+    );
     if (success) {
       setGameState(game);
     }
