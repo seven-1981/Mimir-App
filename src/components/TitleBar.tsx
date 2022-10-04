@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GameContext } from "../store/gameContext";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_CARDS, ROUTE_HOME } from "../App";
-import { NUMBER_OF_CARDS } from "../models/Game";
+import { INITIAL_VALUE_CARDCOUNT } from "../models/Game";
 import {
   StyledButton,
   StyledLabel,
@@ -15,8 +15,7 @@ export const TitleBar = () => {
   const navigate = useNavigate();
 
   const onClickSolveButton = () => {
-    console.log("Value of cardCount: " + cardCount);
-    if (cardCount === NUMBER_OF_CARDS) {
+    if (cardCount === INITIAL_VALUE_CARDCOUNT) {
       navigate(ROUTE_HOME);
     } else {
       const url = window.location.href;
@@ -32,9 +31,9 @@ export const TitleBar = () => {
     <StyledTitleBar>
       <StyledLabel>Mimir</StyledLabel>
       <StyledButton onClick={() => onClickSolveButton()}>
-        {cardCount === NUMBER_OF_CARDS
+        {cardCount === INITIAL_VALUE_CARDCOUNT || cardCount === 0
           ? "New Game"
-          : "Solve # " + (NUMBER_OF_CARDS - cardCount).toString()}
+          : "Solve # " + (INITIAL_VALUE_CARDCOUNT - cardCount).toString()}
       </StyledButton>
       <StyledLink to={"/cards"}>Manage Cards</StyledLink>
     </StyledTitleBar>

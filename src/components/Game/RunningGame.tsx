@@ -1,6 +1,5 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { GameContext } from "../../store/gameContext";
-import { fetchApiWithData } from "../../utils/fetchApi";
 import {
   fetchApiGetGame,
   fetchApiPatchAnswer,
@@ -17,7 +16,7 @@ import {
 } from "../styles";
 
 export const RunningGame = () => {
-  const { dispatch } = useContext(GameContext);
+  const { cardCount, dispatch } = useContext(GameContext);
   const [progress, setProgress] = useState<number>(0);
   const [inputText, setInputText] = useState("");
   const [gameState, setGameState] = useState<Game>(initialGameState);
@@ -34,11 +33,10 @@ export const RunningGame = () => {
 
   const submitOnClick = async () => {
     await updateGameStatus();
-    dispatch({ type: "set-cardCount", value: gameState.cardCount - 1 });
+    console.log("CardCount submitOnClick: " + cardCount);
+    dispatch({ type: "set-cardCount", value: cardCount - 1 });
     setProgress(
-      Math.round(
-        (100 * (NUMBER_OF_CARDS - gameState.cardCount)) / NUMBER_OF_CARDS
-      )
+      Math.round((100 * (NUMBER_OF_CARDS - cardCount)) / NUMBER_OF_CARDS)
     );
   };
 

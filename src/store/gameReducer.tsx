@@ -1,4 +1,8 @@
-import { NUMBER_OF_CARDS, runningGame } from "../models/Game";
+import {
+  INITIAL_VALUE_CARDCOUNT,
+  NUMBER_OF_CARDS,
+  runningGame,
+} from "../models/Game";
 import { GameAction } from "../models/GameAction";
 
 export function gameReducer(
@@ -25,7 +29,7 @@ export function gameReducer(
       return {
         ...game,
         front: "",
-        cardCount: NUMBER_OF_CARDS,
+        cardCount: INITIAL_VALUE_CARDCOUNT,
         solved: [],
       };
     default:

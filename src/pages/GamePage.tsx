@@ -3,12 +3,12 @@ import { StartGame } from "../components/Game/StartGame";
 import { GameResult } from "../components/Game/GameResult";
 import { GameContext } from "../store/gameContext";
 import { useContext } from "react";
-import { NUMBER_OF_CARDS } from "../models/Game";
+import { INITIAL_VALUE_CARDCOUNT, NUMBER_OF_CARDS } from "../models/Game";
 
 export const GamePage = () => {
   const { cardCount } = useContext(GameContext);
 
-  if (cardCount === NUMBER_OF_CARDS) {
+  if (cardCount === INITIAL_VALUE_CARDCOUNT) {
     return (
       <div>
         <StartGame />
