@@ -7,34 +7,21 @@ const Background = css`
   font-family: Phantomsans, sans-serif;
 
   width: 100%;
-  background-size: 300% 300%;
-  background-image: linear-gradient(
-    -135deg,
-    rgba(204, 237, 253, 1) 0%,
-    rgba(191, 200, 250, 1) 25%,
-    rgba(179, 160, 213, 1) 51%,
-    rgba(163, 140, 200, 1) 100%
+  background-size: 100% 100%;
+  background: linear-gradient(
+    45deg,
+    rgba(175, 174, 207, 1) 0%,
+    rgba(221, 221, 232, 1) 31%,
+    rgba(198, 219, 240, 0.9920343137254902) 92%
   );
-  animation: AnimateBG 20s ease infinite;
-
-  @keyframes AnimateBG {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
 `;
 
 export const GlobalStyle = createGlobalStyle`
 * {
-box-sizing: border-box;
-margin: 10;
-text-shadow: -1px 0 white, 0 1px black, 1px 0 black, 0 -1px white;
+    box-sizing: border-box;
+    margin: 10;
+    text-shadow: -1px 0 white, 0 1px black, 1px 0 black, 0 -1px white;
+    letter-spacing: 2px;
 }
 body {
 ${Background};

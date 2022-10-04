@@ -21,9 +21,8 @@ function App() {
       <Routes>
         <Route path={ROUTE_HOME} element={<HomePage />}>
           <Route path={ROUTE_HOME} element={<GamePage />} />
-          <Route path={ROUTE_CARDS} element={<CardsPage />}>
-            <Route path={ROUTE_CARD} element={<CardPage />} />
-          </Route>
+          <Route path={ROUTE_CARDS} element={<CardsPage />} />
+          <Route path={ROUTE_CARD} element={<CardPage />} />
         </Route>
         <Route
           path={ROUTE_NOT_FOUND}

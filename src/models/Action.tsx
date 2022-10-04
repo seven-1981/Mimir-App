@@ -21,8 +21,14 @@ type UpdateCardAction = {
   card: Card;
 };
 
+type UpdateCardCountAction = {
+  type: "update-cardCount";
+  cardCount: number;
+};
+
 export type Action =
   | SetCardsAction
   | DeleteCardAction
   | AddCardAction
-  | UpdateCardAction;
+  | UpdateCardAction
+  | UpdateCardCountAction;

@@ -1,13 +1,23 @@
 import { StyledButton, StyledLabel, StyledInputForm } from "../styles";
 import { useContext } from "react";
+import { fetchApiWithData } from "../../utils/fetchApi";
+import { Game, NUMBER_OF_CARDS } from "../../models/Game";
 import { GameContext } from "../../store/gameContext";
-import { NUMBER_OF_CARDS } from "../../models/Game";
 
 export const StartGame = () => {
   const { dispatch } = useContext(GameContext);
 
   const startOnClick = async () => {
-    dispatch({ type: "set-cardCount", value: NUMBER_OF_CARDS - 1 });
+    const game: Game = {
+      front: "",
+      cardCount: NUMBER_OF_CARDS,
+      solved: [],
+    };
+    dispatch({ type: "set-cardCount", value: game.cardCount - 1 });
+
+    await fetchApiWithData<Game>("/api/game", "POST", game).then((value) => {
+      console.log("Post Game Status: " + value);
+    });
   };
 
   return (

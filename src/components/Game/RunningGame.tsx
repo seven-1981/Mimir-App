@@ -8,10 +8,9 @@ import {
   StyledLabel,
   StyledInputForm,
 } from "../styles";
-import {
-  fetchApiPatchAnswer,
-  fetchApiPostGame,
-} from "../../utils/fetchApiPostGame";
+import { fetchApiPatchAnswer } from "../../utils/fetchApiPostGame";
+import { fetchApiGetGame } from "../../utils/fetchApiGetDeleteGame";
+import { fetchApi } from "../../utils/fetchApi";
 
 export const RunningGame = () => {
   const { dispatch } = useContext(GameContext);
@@ -21,7 +20,7 @@ export const RunningGame = () => {
 
   useEffect(() => {
     const getStartedGame = async () => {
-      const { game, success } = await fetchApiPostGame("/api/game");
+      const { game, success } = await fetchApiGetGame("/api/game");
       if (success) {
         setGameState(game);
       }
@@ -47,9 +46,10 @@ export const RunningGame = () => {
     setInputText("");
   };
 
-  const deleteOnClick = () => {
+  const deleteOnClick = async () => {
     dispatch({ type: "clear-game" });
     setProgress(0);
+    await fetchApi("/api/game", "DELETE");
   };
 
   const inputFieldChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
