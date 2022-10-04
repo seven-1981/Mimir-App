@@ -4,7 +4,11 @@ import { fetchApiWithData } from "../../utils/fetchApi";
 import { Game, initialGameState } from "../../models/Game";
 import { GameContext } from "../../store/gameContext";
 
-export const StartGame = () => {
+interface props {
+  displayText: string;
+}
+
+export const StartGame = ({ displayText }: props) => {
   const { dispatch } = useContext(GameContext);
 
   const startOnClick = async () => {
@@ -22,7 +26,7 @@ export const StartGame = () => {
         <StyledButton onClick={startOnClick}>Start new Game</StyledButton>
       </StyledInputForm>
       <StyledInputForm>
-        <StyledLabel>No game running </StyledLabel>
+        <StyledLabel>{displayText}</StyledLabel>
       </StyledInputForm>
     </div>
   );

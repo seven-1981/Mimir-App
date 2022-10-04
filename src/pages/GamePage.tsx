@@ -3,7 +3,7 @@ import { StartGame } from "../components/Game/StartGame";
 import { GameResult } from "../components/Game/GameResult";
 import { GameContext } from "../store/gameContext";
 import { useContext } from "react";
-import { INITIAL_VALUE_CARDCOUNT, NUMBER_OF_CARDS } from "../models/Game";
+import { INITIAL_VALUE_CARDCOUNT } from "../models/Game";
 
 export const GamePage = () => {
   const { cardCount } = useContext(GameContext);
@@ -11,12 +11,13 @@ export const GamePage = () => {
   if (cardCount === INITIAL_VALUE_CARDCOUNT) {
     return (
       <div>
-        <StartGame />
+        <StartGame displayText={"No game running"} />
       </div>
     );
   } else if (cardCount === 0) {
     return (
       <div>
+        <StartGame displayText={"Solved x out of y"} />
         <GameResult />
       </div>
     );

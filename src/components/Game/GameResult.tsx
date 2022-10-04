@@ -1,9 +1,18 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GameContext } from "../../store/gameContext";
 import { StyledLabel } from "../styles";
+import { fetchApiGetGame } from "../../utils/fetchApiGetDeleteGame";
 
 export const GameResult = () => {
-  const { solved } = useContext(GameContext);
+  useEffect(() => {
+    const getFinishedGame = async () => {
+      const { game, success } = await fetchApiGetGame("/api/game");
+      if (!success) {
+        console.log("Failed to get finished game!");
+      }
+    };
+    getFinishedGame();
+  }, []);
 
   return (
     <div>
@@ -13,7 +22,7 @@ export const GameResult = () => {
         <StyledLabel> Accepted </StyledLabel>
       </div>
       <div>
-        <StyledLabel> 1 </StyledLabel> <StyledLabel> 2 </StyledLabel>
+        <StyledLabel> game </StyledLabel> <StyledLabel> 2 </StyledLabel>
         <StyledLabel> 3 </StyledLabel> <StyledLabel> 4 </StyledLabel>
       </div>
       <div>

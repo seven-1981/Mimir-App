@@ -10,10 +10,20 @@ export function gameReducer(
   action: GameAction
 ): runningGame {
   switch (action.type) {
+    case "set-front":
+      return {
+        ...game,
+        front: action.front,
+      };
     case "set-cardCount":
       return {
         ...game,
         cardCount: action.value,
+      };
+    case "set-solved":
+      return {
+        ...game,
+        solved: action.solved,
       };
     case "clear-game":
       return {
