@@ -1,38 +1,43 @@
 import { useContext, useEffect } from "react";
 import { GameContext } from "../../store/gameContext";
 import { StyledLabel } from "../styles";
-import { fetchApiGetGame } from "../../utils/fetchApiGetDeleteGame";
+import { INITIAL_VALUE_CARDCOUNT } from "../../models/Game";
 
 export const GameResult = () => {
-  useEffect(() => {
-    const getFinishedGame = async () => {
-      const { game, success } = await fetchApiGetGame("/api/game");
-      if (!success) {
-        console.log("Failed to get finished game!");
-      }
-    };
-    getFinishedGame();
-  }, []);
+  const { solved } = useContext(GameContext);
 
   return (
     <div>
-      <div>
-        <StyledLabel> Front </StyledLabel> <StyledLabel> Back </StyledLabel>
-        <StyledLabel> Your Answer </StyledLabel>{" "}
-        <StyledLabel> Accepted </StyledLabel>
-      </div>
-      <div>
-        <StyledLabel> game </StyledLabel> <StyledLabel> 2 </StyledLabel>
-        <StyledLabel> 3 </StyledLabel> <StyledLabel> 4 </StyledLabel>
-      </div>
-      <div>
-        <StyledLabel> 5 </StyledLabel> <StyledLabel> 6 </StyledLabel>
-        <StyledLabel> 7 </StyledLabel> <StyledLabel> 8 </StyledLabel>
-      </div>
-      <div>
-        <StyledLabel> 9 </StyledLabel> <StyledLabel> 10 </StyledLabel>
-        <StyledLabel> 11 </StyledLabel> <StyledLabel> 12 </StyledLabel>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <td> Front </td>
+            <td> Back </td>
+            <td> Your Answer </td>
+            <td> Accepted </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{solved[0].front}</td>
+            <td>{solved[0].back}</td>
+            <td>{solved[0].answer}</td>
+            <td>{solved[2].accepted === true ? "True" : "False"}</td>
+          </tr>
+          <tr>
+            <td>{solved[1].front}</td>
+            <td>{solved[1].back}</td>
+            <td>{solved[1].answer}</td>
+            <td>{solved[2].accepted === true ? "True" : "False"}</td>
+          </tr>
+          <tr>
+            <td>{solved[2].front}</td>
+            <td>{solved[2].back}</td>
+            <td>{solved[2].answer}</td>
+            <td>{solved[2].accepted === true ? "True" : "False"}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };
