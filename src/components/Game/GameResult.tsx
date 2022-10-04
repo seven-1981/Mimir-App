@@ -22,13 +22,13 @@ export const GameResult = () => {
             <td>{solved[0].front}</td>
             <td>{solved[0].back}</td>
             <td>{solved[0].answer}</td>
-            <td>{solved[2].accepted === true ? "True" : "False"}</td>
+            <td>{solved[0].accepted === true ? "True" : "False"}</td>
           </tr>
           <tr>
             <td>{solved[1].front}</td>
             <td>{solved[1].back}</td>
             <td>{solved[1].answer}</td>
-            <td>{solved[2].accepted === true ? "True" : "False"}</td>
+            <td>{solved[1].accepted === true ? "True" : "False"}</td>
           </tr>
           <tr>
             <td>{solved[2].front}</td>

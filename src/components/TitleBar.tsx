@@ -27,13 +27,23 @@ export const TitleBar = () => {
     }
   };
 
+  const getButtonString = (): string => {
+    {
+      if (cardCount === INITIAL_VALUE_CARDCOUNT) {
+        return "New Game";
+      } else if (cardCount === 0) {
+        return "Finished";
+      } else {
+        return "Solve # " + (INITIAL_VALUE_CARDCOUNT - cardCount).toString();
+      }
+    }
+  };
+
   return (
     <StyledTitleBar>
       <StyledLabel>Mimir</StyledLabel>
       <StyledButton onClick={() => onClickSolveButton()}>
-        {cardCount === INITIAL_VALUE_CARDCOUNT || cardCount === 0
-          ? "New Game"
-          : "Solve # " + (INITIAL_VALUE_CARDCOUNT - cardCount).toString()}
+        {getButtonString()}
       </StyledButton>
       <StyledLink to={"/cards"}>Manage Cards</StyledLink>
     </StyledTitleBar>
