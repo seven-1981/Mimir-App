@@ -33,10 +33,11 @@ export const RunningGame = () => {
 
   const submitOnClick = async () => {
     await updateGameStatus();
-    console.log("CardCount submitOnClick: " + cardCount);
-    dispatch({ type: "set-cardCount", value: cardCount - 1 });
+    const newCardCount = cardCount - 1;
+    console.log("CardCount submitOnClick: " + newCardCount);
+    dispatch({ type: "set-cardCount", value: newCardCount });
     setProgress(
-      Math.round((100 * (NUMBER_OF_CARDS - cardCount)) / NUMBER_OF_CARDS)
+      Math.round((100 * (NUMBER_OF_CARDS - newCardCount)) / NUMBER_OF_CARDS)
     );
   };
 
