@@ -1,8 +1,6 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { GameContext } from "../../store/gameContext";
 import { initialGameState, NUMBER_OF_CARDS } from "../../models/Game";
-import { fetchApiPostPatchGame } from "../../utils/fetchApiPostPatchGame";
-import { fetchApiGetGame } from "../../utils/fetchApiGetDeleteGame";
 import { Game } from "../../models/Game";
 import {
   StyledInput,
@@ -10,23 +8,22 @@ import {
   StyledLabel,
   StyledInputForm,
 } from "../styles";
+import {
+  fetchApiPatchAnswer,
+  fetchApiPostGame,
+} from "../../utils/fetchApiPostGame";
 
 export const RunningGame = () => {
   const { dispatch } = useContext(GameContext);
   const [progress, setProgress] = useState<number>(0);
   const [inputText, setInputText] = useState("");
-  const [game, setGame] = useState<Game>(initialGameState);
+  const [gameState, setGameState] = useState<Game>(initialGameState);
 
   useEffect(() => {
     const getStartedGame = async () => {
-      const { game, success } = await fetchApiGetGame("/api/game");
+      const { game, success } = await fetchApiPostGame("/api/game");
       if (success) {
-        console.log("Get Game success front: " + game.front);
-        console.log("Get Game success cardCount: " + game.cardCount);
-        console.log("Get Game success solved: " + game.solved[0].front);
-        console.log("Get Game success solved: " + game.solved[1].front);
-        console.log("Get Game success solved: " + game.solved[2].front);
-        setGame(game);
+        setGameState(game);
       }
     };
     getStartedGame();
@@ -34,27 +31,19 @@ export const RunningGame = () => {
 
   const submitOnClick = async () => {
     await updateGameStatus();
-    dispatch({ type: "set-cardCount", value: game.cardCount + 1 });
-    setProgress(Math.round((100 * game.cardCount) / NUMBER_OF_CARDS));
+    dispatch({ type: "set-cardCount", value: gameState.cardCount - 1 });
+    setProgress(
+      Math.round(
+        (100 * (NUMBER_OF_CARDS - gameState.cardCount)) / NUMBER_OF_CARDS
+      )
+    );
   };
 
   const updateGameStatus = async () => {
-    const gameToPost: Game = {
-      front: game.front,
-      cardCount: game.cardCount + 1,
-      solved: game.solved,
-    };
-
-    const result = inputText === gameToPost.solved[game.cardCount - 1].back;
-    gameToPost.solved[game.cardCount - 1].answer = inputText;
-    gameToPost.solved[game.cardCount - 1].accepted = result;
-    setGame(gameToPost);
-
-    await fetchApiPostPatchGame("/api/game", gameToPost, false).then(
-      (value) => {
-        console.log("Patch Game Status: " + value);
-      }
-    );
+    const { game, success } = await fetchApiPatchAnswer("/api/game", inputText);
+    if (success) {
+      setGameState(game);
+    }
     setInputText("");
   };
 
@@ -75,7 +64,7 @@ export const RunningGame = () => {
         <StyledButton onClick={deleteOnClick}>Delete Game</StyledButton>
       </StyledInputForm>
       <StyledInputForm>
-        <StyledLabel> {game.front} </StyledLabel>
+        <StyledLabel> {gameState.front} </StyledLabel>
       </StyledInputForm>
       <StyledInputForm>
         <StyledInput

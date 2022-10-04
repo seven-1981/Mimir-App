@@ -8,13 +8,13 @@ import { NUMBER_OF_CARDS } from "../models/Game";
 export const GamePage = () => {
   const { cardCount } = useContext(GameContext);
 
-  if (cardCount === 0) {
+  if (cardCount === NUMBER_OF_CARDS) {
     return (
       <div>
         <StartGame />
       </div>
     );
-  } else if (cardCount === NUMBER_OF_CARDS) {
+  } else if (cardCount === 0) {
     return (
       <div>
         <GameResult />
