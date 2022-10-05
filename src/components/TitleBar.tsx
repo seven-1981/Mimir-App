@@ -1,21 +1,21 @@
 import { useContext } from "react";
-import { GameContext } from "../store/gameContext";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_CARDS, ROUTE_HOME } from "../App";
-import { INITIAL_VALUE_CARDCOUNT } from "../models/Game";
+import { NO_GAME_RUNNING } from "../models/Game";
 import {
   StyledButton,
   StyledLabel,
   StyledLink,
   StyledTitleBar,
 } from "./styles";
+import { AppContext } from "../store/context";
 
 export const TitleBar = () => {
-  const { cardCount } = useContext(GameContext);
+  const { cardCount } = useContext(AppContext);
   const navigate = useNavigate();
 
   const onClickSolveButton = () => {
-    if (cardCount === INITIAL_VALUE_CARDCOUNT) {
+    if (cardCount === NO_GAME_RUNNING) {
       navigate(ROUTE_HOME);
     } else {
       const url = window.location.href;
@@ -29,12 +29,12 @@ export const TitleBar = () => {
 
   const getButtonString = (): string => {
     {
-      if (cardCount === INITIAL_VALUE_CARDCOUNT) {
+      if (cardCount === NO_GAME_RUNNING) {
         return "New Game";
       } else if (cardCount === 0) {
         return "Finished";
       } else {
-        return "Solve # " + (INITIAL_VALUE_CARDCOUNT - cardCount).toString();
+        return "Solve # " + (NO_GAME_RUNNING - cardCount).toString();
       }
     }
   };
