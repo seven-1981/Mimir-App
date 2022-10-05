@@ -1,7 +1,11 @@
 import { StyledButton, StyledLabel, StyledInputForm } from "../styles";
 import { useContext } from "react";
-import { fetchApiWithData } from "../../utils/fetchApi";
-import { Game, initialGameState } from "../../models/Game";
+import { fetchApi, fetchApiWithData } from "../../utils/fetchApi";
+import {
+  Game,
+  INITIAL_VALUE_CARDCOUNT,
+  initialGameState,
+} from "../../models/Game";
 import { GameContext } from "../../store/gameContext";
 
 interface props {
@@ -9,9 +13,13 @@ interface props {
 }
 
 export const StartGame = ({ displayText }: props) => {
-  const { dispatch } = useContext(GameContext);
+  const { cardCount, dispatch } = useContext(GameContext);
 
   const startOnClick = async () => {
+    if (cardCount === 0) {
+      dispatch({ type: "clear-game" });
+      await fetchApi("/api/game", "DELETE");
+    }
     const game: Game = initialGameState;
     dispatch({ type: "set-cardCount", value: game.cardCount - 1 });
 

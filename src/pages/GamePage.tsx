@@ -3,10 +3,18 @@ import { StartGame } from "../components/Game/StartGame";
 import { GameResult } from "../components/Game/GameResult";
 import { GameContext } from "../store/gameContext";
 import { useContext } from "react";
-import { INITIAL_VALUE_CARDCOUNT } from "../models/Game";
+import { INITIAL_VALUE_CARDCOUNT, NUMBER_OF_CARDS } from "../models/Game";
 
 export const GamePage = () => {
-  const { cardCount } = useContext(GameContext);
+  const { cardCount, solved } = useContext(GameContext);
+
+  const getText = (): string => {
+    let correctAnswers = 0;
+    for (let i = 0; i < NUMBER_OF_CARDS; i++) {
+      if (solved[i].accepted === true) correctAnswers++;
+    }
+    return "Solved " + correctAnswers + " out of " + NUMBER_OF_CARDS;
+  };
 
   if (cardCount === INITIAL_VALUE_CARDCOUNT) {
     return (
@@ -17,7 +25,7 @@ export const GamePage = () => {
   } else if (cardCount === 0) {
     return (
       <div>
-        <StartGame displayText={"Solved x out of y"} />
+        <StartGame displayText={getText()} />
         <GameResult />
       </div>
     );
