@@ -19,7 +19,7 @@ export const GamePage = () => {
       dispatch({ type: "update-cardCount", cardCount: cardCountToSet });
     };
     fetchGame();
-  }, [cardCount]);
+  }, []);
 
   const onClickStartButton = async () => {
     const { game, success } = await fetchApiGetGame("/api/game");

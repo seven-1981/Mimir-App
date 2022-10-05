@@ -28,14 +28,12 @@ export const TitleBar = () => {
   };
 
   const getButtonString = (): string => {
-    {
-      if (cardCount === NO_GAME_RUNNING) {
-        return "New Game";
-      } else if (cardCount === 0) {
-        return "Finished";
-      } else {
-        return "Solve # " + (NO_GAME_RUNNING - cardCount).toString();
-      }
+    if (cardCount === NO_GAME_RUNNING) {
+      return "New Game";
+    } else if (cardCount === 0) {
+      return "Finished";
+    } else {
+      return "Solve # " + (NO_GAME_RUNNING - cardCount).toString();
     }
   };
 
