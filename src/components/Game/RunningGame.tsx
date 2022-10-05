@@ -6,8 +6,7 @@ import {
 } from "../../utils/fetchApiGetDeleteGame";
 import { fetchApi } from "../../utils/fetchApi";
 import { GameAnswer } from "../../models/GameAnswer";
-import { initialGameState, NUMBER_OF_CARDS } from "../../models/Game";
-import { Game } from "../../models/Game";
+import { NUMBER_OF_CARDS } from "../../models/Game";
 import {
   StyledInput,
   StyledButton,
@@ -16,16 +15,16 @@ import {
 } from "../styles";
 
 export const RunningGame = () => {
-  const { cardCount, dispatch } = useContext(GameContext);
+  const { front, cardCount, dispatch } = useContext(GameContext);
   const [progress, setProgress] = useState<number>(0);
   const [inputText, setInputText] = useState("");
-  const [gameState, setGameState] = useState<Game>(initialGameState);
 
   useEffect(() => {
     const getStartedGame = async () => {
       const { game, success } = await fetchApiGetGame("/api/game");
       if (success) {
-        setGameState(game);
+        dispatch({ type: "set-front", front: game.front });
+        dispatch({ type: "set-solved", solved: game.solved });
       }
     };
     getStartedGame();
@@ -33,10 +32,10 @@ export const RunningGame = () => {
 
   const submitOnClick = async () => {
     await updateGameStatus();
-    console.log("CardCount submitOnClick: " + cardCount);
-    dispatch({ type: "set-cardCount", value: cardCount - 1 });
+    const newCardCount = cardCount - 1;
+    dispatch({ type: "set-cardCount", value: newCardCount });
     setProgress(
-      Math.round((100 * (NUMBER_OF_CARDS - cardCount)) / NUMBER_OF_CARDS)
+      Math.round((100 * (NUMBER_OF_CARDS - newCardCount)) / NUMBER_OF_CARDS)
     );
   };
 
@@ -49,7 +48,8 @@ export const RunningGame = () => {
       currentAnswer
     );
     if (success) {
-      setGameState(game);
+      dispatch({ type: "set-front", front: game.front });
+      dispatch({ type: "set-solved", solved: game.solved });
     }
     setInputText("");
   };
@@ -72,7 +72,7 @@ export const RunningGame = () => {
         <StyledButton onClick={deleteOnClick}>Delete Game</StyledButton>
       </StyledInputForm>
       <StyledInputForm>
-        <StyledLabel> {gameState.front} </StyledLabel>
+        <StyledLabel> {front} </StyledLabel>
       </StyledInputForm>
       <StyledInputForm>
         <StyledInput
