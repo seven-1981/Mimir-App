@@ -17,25 +17,27 @@ import { AppContext } from "../../store/context";
 export const RunningGame = () => {
   const { cardCount, dispatch } = useContext(AppContext);
   const [inputText, setInputText] = useState("");
-  const [game, setGame] = useState<Game>(emptyGame);
+  const [frontText, setFrontText] = useState("");
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const getStartedGame = async () => {
+    const fetchGame = async () => {
       const { game, success } = await fetchApiGetGame("/api/game");
       if (success) {
-        setGame(game);
+        setFrontText(game.front);
+        setProgress(
+          Math.round((100 * (game.cardCount - cardCount)) / game.cardCount)
+        );
       }
     };
-    getStartedGame();
-  }, [cardCount]);
+    fetchGame();
+  }, []);
 
   const onClickSubmitButton = async () => {
     if (inputText === "") {
       return;
     }
     await updateGameStatus();
-    const newCardCount = cardCount - 1;
-    dispatch({ type: "update-cardCount", cardCount: newCardCount });
   };
 
   const updateGameStatus = async () => {
@@ -49,8 +51,13 @@ export const RunningGame = () => {
     if (!success) {
       return;
     }
-    setGame(game);
+    const newCardCount = cardCount - 1;
+    dispatch({ type: "update-cardCount", cardCount: newCardCount });
+    setFrontText(game.front);
     setInputText("");
+    setProgress(
+      Math.round((100 * (game.cardCount - newCardCount)) / game.cardCount)
+    );
   };
 
   const onClickDeleteButton = async () => {
@@ -65,19 +72,13 @@ export const RunningGame = () => {
   return (
     <div>
       <StyledInputForm>
-        <StyledLabel>
-          {" "}
-          Progress:{" "}
-          {Math.round(
-            (100 * (game.cardCount - cardCount)) / game.cardCount
-          )}{" "}
-        </StyledLabel>
+        <StyledLabel>Progress: {progress}</StyledLabel>
         <StyledButton onClick={() => onClickDeleteButton()}>
           Delete Game
         </StyledButton>
       </StyledInputForm>
       <StyledInputForm>
-        <StyledLabel> {game.front} </StyledLabel>
+        <StyledLabel> {frontText} </StyledLabel>
       </StyledInputForm>
       <StyledInputForm>
         <StyledInput
