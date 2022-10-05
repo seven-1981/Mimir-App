@@ -1,8 +1,12 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { GameContext } from "../../store/gameContext";
-import { NUMBER_OF_CARDS } from "../../models/Game";
-import { fetchApiWithData } from "../../utils/fetchApi";
-import { GameCard } from "../../models/GameCard";
+import {
+  fetchApiGetGame,
+  fetchApiPatchAnswer,
+} from "../../utils/fetchApiGetDeleteGame";
+import { fetchApi } from "../../utils/fetchApi";
+import { GameAnswer } from "../../models/GameAnswer";
+import { initialGameState, NUMBER_OF_CARDS } from "../../models/Game";
 import { Game } from "../../models/Game";
 import {
   StyledInput,
@@ -12,63 +16,48 @@ import {
 } from "../styles";
 
 export const RunningGame = () => {
-  const { front, cardCount, solved, dispatch } = useContext(GameContext);
-  const [index, setIndex] = useState<number>(0);
-  const [progress, setProgress] = useState<number>(0); // ToDo: move to context
-  const [solvedCards, setSolvedCards] = useState<GameCard[]>(solved); // ToDo: move to context
+  const { cardCount, dispatch } = useContext(GameContext);
+  const [progress, setProgress] = useState<number>(0);
   const [inputText, setInputText] = useState("");
+  const [gameState, setGameState] = useState<Game>(initialGameState);
 
   useEffect(() => {
-    dispatch({ type: "set-front", front: solved[index].front });
-    dispatch({ type: "set-cardCount", value: index + 1 });
-    setProgress(Math.round((100 * index) / NUMBER_OF_CARDS));
-  }, [index]);
+    const getStartedGame = async () => {
+      const { game, success } = await fetchApiGetGame("/api/game");
+      if (success) {
+        setGameState(game);
+      }
+    };
+    getStartedGame();
+  }, []);
 
   const submitOnClick = async () => {
-    processAnswer();
-    await patchGameStatus();
-    updateIndex();
+    await updateGameStatus();
+    console.log("CardCount submitOnClick: " + cardCount);
+    dispatch({ type: "set-cardCount", value: cardCount - 1 });
+    setProgress(
+      Math.round((100 * (NUMBER_OF_CARDS - cardCount)) / NUMBER_OF_CARDS)
+    );
   };
 
-  const processAnswer = () => {
-    const result = inputText === solved[index].back;
-    console.log("Result: " + solved[index].back);
-    console.log("Result bool: " + result);
-    const solvedCard: GameCard = {
-      id: solved[index].id,
-      front: solved[index].front,
-      back: solved[index].back,
+  const updateGameStatus = async () => {
+    const currentAnswer: GameAnswer = {
       answer: inputText,
-      accepted: result,
     };
-    setSolvedCards([...solvedCards, solvedCard]);
-    dispatch({ type: "set-solved", solved: solvedCards });
+    const { game, success } = await fetchApiPatchAnswer(
+      "/api/game",
+      currentAnswer
+    );
+    if (success) {
+      setGameState(game);
+    }
     setInputText("");
   };
 
-  const updateIndex = () => {
-    setIndex(index + 1);
-  };
-
-  const patchGameStatus = async () => {
-    const game: Game = {
-      front: front,
-      cardCount: cardCount,
-      solved: solved,
-    };
-    await fetchApiWithData<string>(
-      "/api/game",
-      "PATCH",
-      game.solved[game.cardCount].answer
-    ).then((value) => {
-      console.log("Patch Game Status: " + value);
-    });
-  };
-
-  const deleteOnClick = () => {
+  const deleteOnClick = async () => {
     dispatch({ type: "clear-game" });
-    setIndex(0);
     setProgress(0);
+    await fetchApi("/api/game", "DELETE");
   };
 
   const inputFieldChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +72,7 @@ export const RunningGame = () => {
         <StyledButton onClick={deleteOnClick}>Delete Game</StyledButton>
       </StyledInputForm>
       <StyledInputForm>
-        <StyledLabel> {front} </StyledLabel>
+        <StyledLabel> {gameState.front} </StyledLabel>
       </StyledInputForm>
       <StyledInputForm>
         <StyledInput
