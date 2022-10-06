@@ -1,7 +1,7 @@
 import { AppState } from "../models/ApiState";
 import { createContext, ReactNode, useEffect, useReducer } from "react";
 import { apiReducer } from "./apiReducer";
-import { fetchApiGetCards } from "../utils/fetchApiGetCards";
+import { fetchApiGetCards } from "../utils/fetchApiGet";
 import { Action } from "../models/Action";
 import { NO_GAME_RUNNING } from "../models/Game";
 

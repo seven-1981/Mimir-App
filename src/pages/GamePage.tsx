@@ -3,7 +3,7 @@ import { StartGame } from "../components/Game/StartGame";
 import { GameResult } from "../components/Game/GameResult";
 import { useContext, useEffect } from "react";
 import { AppContext } from "../store/context";
-import { fetchApiGetGame } from "../utils/fetchApiGetDeleteGame";
+import { fetchApiGetGame } from "../utils/fetchApiGet";
 import { fetchApi } from "../utils/fetchApi";
 import { NO_GAME_RUNNING } from "../models/Game";
 

@@ -18,20 +18,29 @@ export async function fetchApi(
   return false;
 }
 
-export async function fetchApiWithData<T>(
+export interface FetchApiWithDataResponse<T> {
+  data: T | undefined;
+  success: boolean;
+}
+
+export async function fetchApiWithData<DataType, ReturnType>(
   URL: string,
   httpMethod: HttpMethod,
-  dataToAdd: T
-): Promise<boolean> {
+  data: DataType
+): Promise<FetchApiWithDataResponse<ReturnType>> {
   try {
     const apiResponse = await fetch(URL, {
       method: httpMethod,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dataToAdd),
+      body: JSON.stringify(data),
     });
-    return apiResponse.ok;
+
+    if (apiResponse.ok) {
+      const jsonData: ReturnType = await apiResponse.json();
+      return { data: jsonData, success: true };
+    }
   } catch (error) {
     console.log("Error " + error + " during HTTP " + httpMethod + " of " + URL);
   }
-  return false;
+  return { data: undefined, success: false };
 }
