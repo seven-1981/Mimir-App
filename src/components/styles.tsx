@@ -115,3 +115,16 @@ export const StyledInputForm = styled.div`
   justify-content: space-evenly;
   margin: 50px;
 `;
+
+export const StyledCardFront = styled.div`
+  display: flex;
+  width: 400px;
+  height: 200px;
+  background: white;
+  border: solid;
+  border-radius: 0.4rem;
+  border-color: black;
+  font-size: 2rem;
+  align-items: center;
+  justify-content: center;
+`;

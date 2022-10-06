@@ -11,6 +11,7 @@ import {
   StyledButton,
   StyledLabel,
   StyledInputForm,
+  StyledCardFront,
 } from "../styles";
 import { AppContext } from "../../store/context";
 
@@ -68,7 +69,6 @@ export const RunningGame = () => {
     dispatch({ type: "update-cardCount", cardCount: NO_GAME_RUNNING });
   };
 
-  // ToDo: Styling of front of card
   return (
     <div>
       <StyledInputForm>
@@ -78,7 +78,7 @@ export const RunningGame = () => {
         </StyledButton>
       </StyledInputForm>
       <StyledInputForm>
-        <StyledLabel> {frontText} </StyledLabel>
+        <StyledCardFront> {frontText} </StyledCardFront>
       </StyledInputForm>
       <StyledInputForm>
         <StyledInput
