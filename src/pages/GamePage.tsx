@@ -11,7 +11,7 @@ export const GamePage = () => {
   const { cardCount, dispatch } = useContext(AppContext);
 
   const onClickStartButton = async () => {
-    const { game, success } = await fetchApiGetGame("/api/game");
+    const { success } = await fetchApiGetGame("/api/game");
     if (success) {
       const successDelete = await fetchApi("/api/game", "DELETE");
       if (!successDelete) {
@@ -22,7 +22,6 @@ export const GamePage = () => {
     if (!successPost) {
       return;
     }
-    console.log("START ONCLICK");
     dispatch({ type: "update-cardCount", cardCount: NO_GAME_RUNNING - 1 });
   };
 
