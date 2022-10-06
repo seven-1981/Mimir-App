@@ -10,17 +10,6 @@ import { NO_GAME_RUNNING } from "../models/Game";
 export const GamePage = () => {
   const { cardCount, dispatch } = useContext(AppContext);
 
-  useEffect(() => {
-    const fetchGame = async () => {
-      const { game, success } = await fetchApiGetGame("/api/game");
-      const cardCountToSet = success
-        ? game.cardCount - game.solved.length
-        : NO_GAME_RUNNING;
-      dispatch({ type: "update-cardCount", cardCount: cardCountToSet });
-    };
-    fetchGame();
-  }, []);
-
   const onClickStartButton = async () => {
     const { game, success } = await fetchApiGetGame("/api/game");
     if (success) {
@@ -33,7 +22,8 @@ export const GamePage = () => {
     if (!successPost) {
       return;
     }
-    dispatch({ type: "update-cardCount", cardCount: game.cardCount });
+    console.log("START ONCLICK");
+    dispatch({ type: "update-cardCount", cardCount: NO_GAME_RUNNING - 1 });
   };
 
   if (cardCount === NO_GAME_RUNNING) {
