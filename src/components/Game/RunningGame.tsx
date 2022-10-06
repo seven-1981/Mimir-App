@@ -1,42 +1,43 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { GameContext } from "../../store/gameContext";
+import { useContext, useEffect, useState } from "react";
 import {
   fetchApiGetGame,
   fetchApiPatchAnswer,
 } from "../../utils/fetchApiGetDeleteGame";
 import { fetchApi } from "../../utils/fetchApi";
 import { GameAnswer } from "../../models/GameAnswer";
-import { NUMBER_OF_CARDS } from "../../models/Game";
+import { emptyGame, Game, NO_GAME_RUNNING } from "../../models/Game";
 import {
   StyledInput,
   StyledButton,
   StyledLabel,
   StyledInputForm,
 } from "../styles";
+import { AppContext } from "../../store/context";
 
 export const RunningGame = () => {
-  const { front, cardCount, dispatch } = useContext(GameContext);
-  const [progress, setProgress] = useState<number>(0);
+  const { cardCount, dispatch } = useContext(AppContext);
   const [inputText, setInputText] = useState("");
+  const [frontText, setFrontText] = useState("");
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const getStartedGame = async () => {
+    const fetchGame = async () => {
       const { game, success } = await fetchApiGetGame("/api/game");
       if (success) {
-        dispatch({ type: "set-front", front: game.front });
-        dispatch({ type: "set-solved", solved: game.solved });
+        setFrontText(game.front);
+        setProgress(
+          Math.round((100 * (game.cardCount - cardCount)) / game.cardCount)
+        );
       }
     };
-    getStartedGame();
+    fetchGame();
   }, []);
 
-  const submitOnClick = async () => {
+  const onClickSubmitButton = async () => {
+    if (inputText === "") {
+      return;
+    }
     await updateGameStatus();
-    const newCardCount = cardCount - 1;
-    dispatch({ type: "set-cardCount", value: newCardCount });
-    setProgress(
-      Math.round((100 * (NUMBER_OF_CARDS - newCardCount)) / NUMBER_OF_CARDS)
-    );
   };
 
   const updateGameStatus = async () => {
@@ -47,41 +48,48 @@ export const RunningGame = () => {
       "/api/game",
       currentAnswer
     );
-    if (success) {
-      dispatch({ type: "set-front", front: game.front });
-      dispatch({ type: "set-solved", solved: game.solved });
+    if (!success) {
+      return;
     }
+    const newCardCount = cardCount - 1;
+    dispatch({ type: "update-cardCount", cardCount: newCardCount });
+    setFrontText(game.front);
     setInputText("");
+    setProgress(
+      Math.round((100 * (game.cardCount - newCardCount)) / game.cardCount)
+    );
   };
 
-  const deleteOnClick = async () => {
-    dispatch({ type: "clear-game" });
-    setProgress(0);
-    await fetchApi("/api/game", "DELETE");
-  };
-
-  const inputFieldChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputText(event.target.value);
+  const onClickDeleteButton = async () => {
+    const success = await fetchApi("/api/game", "DELETE");
+    if (!success) {
+      return;
+    }
+    dispatch({ type: "update-cardCount", cardCount: NO_GAME_RUNNING });
   };
 
   // ToDo: Styling of front of card
   return (
     <div>
       <StyledInputForm>
-        <StyledLabel> Progress: {progress} </StyledLabel>
-        <StyledButton onClick={deleteOnClick}>Delete Game</StyledButton>
+        <StyledLabel>Progress: {progress}</StyledLabel>
+        <StyledButton onClick={() => onClickDeleteButton()}>
+          Delete Game
+        </StyledButton>
       </StyledInputForm>
       <StyledInputForm>
-        <StyledLabel> {front} </StyledLabel>
+        <StyledLabel> {frontText} </StyledLabel>
       </StyledInputForm>
       <StyledInputForm>
         <StyledInput
           type="text"
-          onChange={inputFieldChangeEvent}
+          onChange={(event) => setInputText(event.target.value)}
           value={inputText}
           placeholder="Answer"
         />
-        <StyledButton onClick={submitOnClick}>Submit</StyledButton>
+        <StyledButton onClick={() => onClickSubmitButton()}>
+          Submit
+        </StyledButton>
       </StyledInputForm>
     </div>
   );

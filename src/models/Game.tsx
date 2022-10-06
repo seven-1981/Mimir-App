@@ -1,21 +1,16 @@
 import { GameCard } from "./GameCard";
-import { GameAction } from "./GameAction";
 
-export const NUMBER_OF_CARDS = 3;
-export const INITIAL_VALUE_CARDCOUNT = NUMBER_OF_CARDS + 1;
+// Todo: BAD!! Depends on the number of cards (3) in the API!!
+export const NO_GAME_RUNNING = 4;
 
-export interface Game {
+export type Game = {
   front: string;
   cardCount: number;
   solved: GameCard[];
-}
+};
 
-export interface runningGame extends Game {
-  dispatch: (action: GameAction) => void;
-}
-
-export const initialGameState: Game = {
+export const emptyGame = {
   front: "",
-  cardCount: INITIAL_VALUE_CARDCOUNT,
+  cardCount: NO_GAME_RUNNING,
   solved: [],
 };

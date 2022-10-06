@@ -3,11 +3,12 @@ import { createContext, ReactNode, useEffect, useReducer } from "react";
 import { apiReducer } from "./apiReducer";
 import { fetchApiGetCards } from "../utils/fetchApiGetCards";
 import { Action } from "../models/Action";
+import { NO_GAME_RUNNING } from "../models/Game";
 
 export const initialState: AppState = {
   dispatch: (action: Action) => {},
   cards: [],
-  cardCount: 0,
+  cardCount: NO_GAME_RUNNING,
 };
 
 export const AppContext = createContext<AppState>(initialState);

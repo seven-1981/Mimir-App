@@ -1,39 +1,46 @@
 import { RunningGame } from "../components/Game/RunningGame";
 import { StartGame } from "../components/Game/StartGame";
 import { GameResult } from "../components/Game/GameResult";
-import { GameContext } from "../store/gameContext";
-import { useContext } from "react";
-import { INITIAL_VALUE_CARDCOUNT, NUMBER_OF_CARDS } from "../models/Game";
+import { useContext, useEffect } from "react";
+import { AppContext } from "../store/context";
+import { fetchApiGetGame } from "../utils/fetchApiGetDeleteGame";
+import { fetchApi } from "../utils/fetchApi";
+import { NO_GAME_RUNNING } from "../models/Game";
 
 export const GamePage = () => {
-  const { cardCount, solved } = useContext(GameContext);
+  const { cardCount, dispatch } = useContext(AppContext);
 
-  const getText = (): string => {
-    let correctAnswers = 0;
-    for (let i = 0; i < NUMBER_OF_CARDS; i++) {
-      if (solved[i].accepted === true) correctAnswers++;
+  useEffect(() => {
+    const fetchGame = async () => {
+      const { game, success } = await fetchApiGetGame("/api/game");
+      const cardCountToSet = success
+        ? game.cardCount - game.solved.length
+        : NO_GAME_RUNNING;
+      dispatch({ type: "update-cardCount", cardCount: cardCountToSet });
+    };
+    fetchGame();
+  }, []);
+
+  const onClickStartButton = async () => {
+    const { game, success } = await fetchApiGetGame("/api/game");
+    if (success) {
+      const successDelete = await fetchApi("/api/game", "DELETE");
+      if (!successDelete) {
+        return;
+      }
     }
-    return "Solved " + correctAnswers + " out of " + NUMBER_OF_CARDS;
+    const successPost = fetchApi("/api/game", "POST");
+    if (!successPost) {
+      return;
+    }
+    dispatch({ type: "update-cardCount", cardCount: game.cardCount });
   };
 
-  if (cardCount === INITIAL_VALUE_CARDCOUNT) {
-    return (
-      <div>
-        <StartGame displayText={"No game running"} />
-      </div>
-    );
+  if (cardCount === NO_GAME_RUNNING) {
+    return <StartGame onClickStartButton={() => onClickStartButton()} />;
   } else if (cardCount === 0) {
-    return (
-      <div>
-        <StartGame displayText={getText()} />
-        <GameResult />
-      </div>
-    );
+    return <GameResult onClickStartButton={() => onClickStartButton()} />;
   } else {
-    return (
-      <div>
-        <RunningGame />
-      </div>
-    );
+    return <RunningGame />;
   }
 };

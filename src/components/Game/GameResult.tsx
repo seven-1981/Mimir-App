@@ -1,43 +1,50 @@
-import { useContext, useEffect } from "react";
-import { GameContext } from "../../store/gameContext";
-import { StyledLabel } from "../styles";
-import { INITIAL_VALUE_CARDCOUNT } from "../../models/Game";
+import { GameCard } from "../../models/GameCard";
+import { useEffect, useState } from "react";
+import { fetchApiGetGame } from "../../utils/fetchApiGetDeleteGame";
+import { ResultsTable } from "./ResultTable";
+import { StyledButton } from "../styles";
 
-export const GameResult = () => {
-  const { solved } = useContext(GameContext);
+export interface GameResultProps {
+  onClickStartButton: () => void;
+}
+export const GameResult = (props: GameResultProps) => {
+  const [fetched, setFetched] = useState(false);
+  const [solvedCards, setSolvedCards] = useState<GameCard[]>([]);
 
-  return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <td> Front </td>
-            <td> Back </td>
-            <td> Your Answer </td>
-            <td> Accepted </td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{solved[0].front}</td>
-            <td>{solved[0].back}</td>
-            <td>{solved[0].answer}</td>
-            <td>{solved[0].accepted === true ? "True" : "False"}</td>
-          </tr>
-          <tr>
-            <td>{solved[1].front}</td>
-            <td>{solved[1].back}</td>
-            <td>{solved[1].answer}</td>
-            <td>{solved[1].accepted === true ? "True" : "False"}</td>
-          </tr>
-          <tr>
-            <td>{solved[2].front}</td>
-            <td>{solved[2].back}</td>
-            <td>{solved[2].answer}</td>
-            <td>{solved[2].accepted === true ? "True" : "False"}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
+  useEffect(() => {
+    fetchGameCards().then((cards) => {
+      console.log(cards);
+      setSolvedCards(cards);
+      setFetched(true);
+      console.log("LOADED");
+    });
+  }, [fetched]);
+
+  const fetchGameCards = async (): Promise<GameCard[]> => {
+    const { game, success } = await fetchApiGetGame("/api/game");
+    if (!success) {
+      return [];
+    }
+    return game.solved;
+  };
+
+  if (solvedCards.length !== 0) {
+    return (
+      <div>
+        <StyledButton onClick={props.onClickStartButton}>
+          Start New Game
+        </StyledButton>
+        <ResultsTable solved={solvedCards} />
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <StyledButton onClick={props.onClickStartButton}>
+          Start New Game
+        </StyledButton>
+        <div>Results are loading...</div>
+      </div>
+    );
+  }
 };
