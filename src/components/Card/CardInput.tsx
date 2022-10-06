@@ -42,7 +42,11 @@ export const CardInput = (props: CardInputProps) => {
   const onClickAddButton = async () => {
     if (cardExistsOrEmpty(frontText, backText)) return;
     const newCard = createCard(frontText, backText);
-    const success = await fetchApiWithData<Card>("/api/cards", "POST", newCard);
+    const success = await fetchApiWithData<Card, undefined>(
+      "/api/cards",
+      "POST",
+      newCard
+    );
     if (!success) {
       return;
     }

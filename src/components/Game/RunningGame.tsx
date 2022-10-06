@@ -1,11 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  fetchApiGetGame,
-  fetchApiPatchAnswer,
-} from "../../utils/fetchApiGetDeleteGame";
+import { fetchApiGetGame } from "../../utils/fetchApiGet";
+import { fetchApiWithData } from "../../utils/fetchApi";
 import { fetchApi } from "../../utils/fetchApi";
 import { GameAnswer } from "../../models/GameAnswer";
-import { emptyGame, Game, NO_GAME_RUNNING } from "../../models/Game";
+import { Game, NO_GAME_RUNNING } from "../../models/Game";
 import {
   StyledInput,
   StyledButton,
@@ -44,19 +42,20 @@ export const RunningGame = () => {
     const currentAnswer: GameAnswer = {
       answer: inputText,
     };
-    const { game, success } = await fetchApiPatchAnswer(
+    const { data, success } = await fetchApiWithData<GameAnswer, Game>(
       "/api/game",
+      "PATCH",
       currentAnswer
     );
-    if (!success) {
+    if (!success || !data) {
       return;
     }
     const newCardCount = cardCount - 1;
     dispatch({ type: "update-cardCount", cardCount: newCardCount });
-    setFrontText(game.front);
+    setFrontText(data.front);
     setInputText("");
     setProgress(
-      Math.round((100 * (game.cardCount - newCardCount)) / game.cardCount)
+      Math.round((100 * (data.cardCount - newCardCount)) / data.cardCount)
     );
   };
 
@@ -68,7 +67,6 @@ export const RunningGame = () => {
     dispatch({ type: "update-cardCount", cardCount: NO_GAME_RUNNING });
   };
 
-  // ToDo: Styling of front of card
   return (
     <div>
       <StyledInputForm>
