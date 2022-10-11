@@ -13,10 +13,8 @@ export const GameResult = (props: GameResultProps) => {
 
   useEffect(() => {
     fetchGameCards().then((cards) => {
-      console.log(cards);
       setSolvedCards(cards);
       setFetched(true);
-      console.log("LOADED");
     });
   }, [fetched]);
 

@@ -5,7 +5,7 @@ import { fetchApiGetCards, fetchApiGetGame } from "../utils/fetchApiGet";
 import { Action } from "../models/Action";
 
 export const initialState: AppState = {
-  dispatch: (action: Action) => {},
+  dispatch: (_action: Action) => {},
   cards: [],
   gameProgress: -1,
   gameCardCount: -1,
