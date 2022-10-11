@@ -21,9 +21,14 @@ type UpdateCardAction = {
   card: Card;
 };
 
-type UpdateCardCountAction = {
-  type: "update-cardCount";
-  cardCount: number;
+type SetGameCardCount = {
+  type: "set-gameCardCount";
+  gameCardCount: number;
+};
+
+type UpdateGameProgressAction = {
+  type: "update-gameProgress";
+  gameProgress: number;
 };
 
 export type Action =
@@ -31,4 +36,5 @@ export type Action =
   | DeleteCardAction
   | AddCardAction
   | UpdateCardAction
-  | UpdateCardCountAction;
+  | UpdateGameProgressAction
+  | SetGameCardCount;

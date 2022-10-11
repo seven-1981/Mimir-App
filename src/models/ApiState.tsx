@@ -3,7 +3,8 @@ import { Action } from "./Action";
 
 export interface ApiState {
   cards: Card[];
-  cardCount: number;
+  gameProgress: number;
+  gameCardCount: number;
 }
 
 export interface AppState extends ApiState {
