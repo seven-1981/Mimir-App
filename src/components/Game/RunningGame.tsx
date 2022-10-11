@@ -9,6 +9,7 @@ import {
   StyledButton,
   StyledLabel,
   StyledInputForm,
+  StyledCardFront,
 } from "../styles";
 import { AppContext } from "../../store/context";
 
@@ -72,7 +73,7 @@ export const RunningGame = () => {
         </StyledButton>
       </StyledInputForm>
       <StyledInputForm>
-        <StyledLabel> {frontText} </StyledLabel>
+        <StyledCardFront> {frontText} </StyledCardFront>
       </StyledInputForm>
       <StyledInputForm>
         <StyledInput
