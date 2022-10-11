@@ -1,7 +1,7 @@
 import { GameCard } from "../../models/GameCard";
 import { useEffect, useState } from "react";
 import { fetchApiGetGame } from "../../utils/fetchApiGet";
-import { ResultsTable } from "./ResultTable";
+import { ResultsTable } from "./GameResultTable";
 import { StyledButton } from "../styles";
 
 export interface GameResultProps {
