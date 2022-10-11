@@ -24,18 +24,10 @@ export const ResultsTable = (props: ResultsTableProps) => {
       <table>
         <thead>
           <tr>
-            <td>
-              <StyledLabel> Front </StyledLabel>
-            </td>
-            <td>
-              <StyledLabel> Back </StyledLabel>
-            </td>
-            <td>
-              <StyledLabel> Your Answer </StyledLabel>
-            </td>
-            <td>
-              <StyledLabel> Accepted </StyledLabel>
-            </td>
+            <td>Front </td>
+            <td>Back</td>
+            <td>Your Answer</td>
+            <td>Accepted</td>
           </tr>
         </thead>
         <tbody>
