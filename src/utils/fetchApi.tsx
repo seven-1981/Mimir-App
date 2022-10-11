@@ -1,3 +1,6 @@
+import { ApiGetGameResponse } from "./fetchApiGetDeleteGame";
+import { emptyGame } from "../models/Game";
+
 export type HttpMethod = "DELETE" | "PUT" | "POST" | "PATCH";
 
 export async function fetchApi(
@@ -16,6 +19,23 @@ export async function fetchApi(
     console.log("Error " + error + " during HTTP " + httpMethod + " of " + URL);
   }
   return false;
+}
+
+export async function fetchApiPost(URL: string): Promise<ApiGetGameResponse> {
+  try {
+    const apiResponse = await fetch(URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (apiResponse.ok) {
+      const jsonData = await apiResponse.json();
+      console.log(jsonData);
+      return { game: jsonData, success: true };
+    }
+  } catch (error) {
+    console.log("Error " + error + " during GET " + URL);
+  }
+  return { game: emptyGame, success: false };
 }
 
 export async function fetchApiWithData<T>(
