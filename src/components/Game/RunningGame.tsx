@@ -3,7 +3,7 @@ import { fetchApiGetGame } from "../../utils/fetchApiGet";
 import { fetchApiWithData } from "../../utils/fetchApi";
 import { fetchApi } from "../../utils/fetchApi";
 import { GameAnswer } from "../../models/GameAnswer";
-import { Game, NO_GAME_RUNNING } from "../../models/Game";
+import { Game } from "../../models/Game";
 import {
   StyledInput,
   StyledButton,
@@ -13,7 +13,7 @@ import {
 import { AppContext } from "../../store/context";
 
 export const RunningGame = () => {
-  const { cardCount, dispatch } = useContext(AppContext);
+  const { gameProgress, gameCardCount, dispatch } = useContext(AppContext);
   const [inputText, setInputText] = useState("");
   const [frontText, setFrontText] = useState("");
   const [progress, setProgress] = useState(0);
@@ -23,9 +23,7 @@ export const RunningGame = () => {
       const { game, success } = await fetchApiGetGame("/api/game");
       if (success) {
         setFrontText(game.front);
-        setProgress(
-          Math.round((100 * (game.cardCount - cardCount)) / game.cardCount)
-        );
+        setProgress(Math.round((100 * gameProgress) / gameCardCount));
       }
     };
     fetchGame();
@@ -50,13 +48,11 @@ export const RunningGame = () => {
     if (!success || !data) {
       return;
     }
-    const newCardCount = cardCount - 1;
-    dispatch({ type: "update-cardCount", cardCount: newCardCount });
+    const newGameProgress = gameProgress + 1;
+    dispatch({ type: "update-gameProgress", gameProgress: newGameProgress });
     setFrontText(data.front);
     setInputText("");
-    setProgress(
-      Math.round((100 * (data.cardCount - newCardCount)) / data.cardCount)
-    );
+    setProgress(Math.round((100 * newGameProgress) / gameCardCount));
   };
 
   const onClickDeleteButton = async () => {
@@ -64,7 +60,7 @@ export const RunningGame = () => {
     if (!success) {
       return;
     }
-    dispatch({ type: "update-cardCount", cardCount: NO_GAME_RUNNING });
+    dispatch({ type: "update-gameProgress", gameProgress: -1 });
   };
 
   return (

@@ -1,10 +1,10 @@
 import { StyledButton, StyledLabel } from "../styles";
 
-export interface StartGameProps {
+export interface NoRunningGameProps {
   onClickStartButton: () => void;
 }
 
-export const StartGame = (props: StartGameProps) => {
+export const NoRunningGame = (props: NoRunningGameProps) => {
   return (
     <div>
       <StyledButton onClick={props.onClickStartButton}>

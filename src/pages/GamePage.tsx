@@ -1,44 +1,32 @@
 import { RunningGame } from "../components/Game/RunningGame";
-import { StartGame } from "../components/Game/StartGame";
+import { NoRunningGame } from "../components/Game/NoRunningGame";
 import { GameResult } from "../components/Game/GameResult";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "../store/context";
 import { fetchApiGetGame } from "../utils/fetchApiGet";
 import { fetchApi } from "../utils/fetchApi";
-import { NO_GAME_RUNNING } from "../models/Game";
 
 export const GamePage = () => {
-  const { cardCount, dispatch } = useContext(AppContext);
-
-  useEffect(() => {
-    const fetchGame = async () => {
-      const { game, success } = await fetchApiGetGame("/api/game");
-      const cardCountToSet = success
-        ? game.cardCount - game.solved.length
-        : NO_GAME_RUNNING;
-      dispatch({ type: "update-cardCount", cardCount: cardCountToSet });
-    };
-    fetchGame();
-  }, []);
+  const { gameProgress, gameCardCount, dispatch } = useContext(AppContext);
 
   const onClickStartButton = async () => {
-    const { game, success } = await fetchApiGetGame("/api/game");
+    const { success } = await fetchApiGetGame("/api/game");
     if (success) {
       const successDelete = await fetchApi("/api/game", "DELETE");
       if (!successDelete) {
         return;
       }
     }
-    const successPost = fetchApi("/api/game", "POST");
+    const successPost = await fetchApi("/api/game", "POST");
     if (!successPost) {
       return;
     }
-    dispatch({ type: "update-cardCount", cardCount: game.cardCount });
+    dispatch({ type: "update-gameProgress", gameProgress: 0 });
   };
 
-  if (cardCount === NO_GAME_RUNNING) {
-    return <StartGame onClickStartButton={() => onClickStartButton()} />;
-  } else if (cardCount === 0) {
+  if (gameProgress === -1) {
+    return <NoRunningGame onClickStartButton={() => onClickStartButton()} />;
+  } else if (gameProgress === gameCardCount) {
     return <GameResult onClickStartButton={() => onClickStartButton()} />;
   } else {
     return <RunningGame />;

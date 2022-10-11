@@ -38,13 +38,6 @@ export const GameResult = (props: GameResultProps) => {
       </div>
     );
   } else {
-    return (
-      <div>
-        <StyledButton onClick={props.onClickStartButton}>
-          Start New Game
-        </StyledButton>
-        <div>Results are loading...</div>
-      </div>
-    );
+    return null;
   }
 };

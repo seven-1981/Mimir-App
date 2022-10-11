@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_CARDS, ROUTE_HOME } from "../App";
-import { NO_GAME_RUNNING } from "../models/Game";
 import {
   StyledButton,
   StyledLabel,
@@ -11,11 +10,11 @@ import {
 import { AppContext } from "../store/context";
 
 export const TitleBar = () => {
-  const { cardCount } = useContext(AppContext);
+  const { gameProgress, gameCardCount } = useContext(AppContext);
   const navigate = useNavigate();
 
   const onClickSolveButton = () => {
-    if (cardCount === NO_GAME_RUNNING) {
+    if (gameProgress === -1) {
       navigate(ROUTE_HOME);
     } else {
       const url = window.location.href;
@@ -28,12 +27,12 @@ export const TitleBar = () => {
   };
 
   const getButtonString = (): string => {
-    if (cardCount === NO_GAME_RUNNING) {
+    if (gameProgress === -1) {
       return "New Game";
-    } else if (cardCount === 0) {
+    } else if (gameProgress === gameCardCount) {
       return "Finished";
     } else {
-      return "Solve # " + (NO_GAME_RUNNING - cardCount).toString();
+      return "Solve # " + gameProgress.toString();
     }
   };
 
