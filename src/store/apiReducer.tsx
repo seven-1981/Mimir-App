@@ -6,42 +6,36 @@ export function apiReducer(state: ApiState, action: Action): ApiState {
   switch (action.type) {
     case "set-cards":
       return {
+        ...state,
         cards: action.cards,
-        gameProgress: state.gameProgress,
-        gameCardCount: state.gameCardCount,
       };
     case "delete-card":
       return {
+        ...state,
         cards: state.cards.filter((card) => {
           return card.id !== action.id;
         }),
-        gameProgress: state.gameProgress,
-        gameCardCount: state.gameCardCount,
       };
     case "add-card":
       return {
+        ...state,
         cards: [...state.cards, action.card],
-        gameProgress: state.gameProgress,
-        gameCardCount: state.gameCardCount,
       };
     case "update-card":
       return {
+        ...state,
         cards: state.cards.map((card) => {
           return card.id === action.id ? action.card : card;
         }),
-        gameProgress: state.gameProgress,
-        gameCardCount: state.gameCardCount,
       };
     case "update-gameProgress":
       return {
-        cards: state.cards,
+        ...state,
         gameProgress: action.gameProgress,
-        gameCardCount: state.gameCardCount,
       };
     case "set-gameCardCount":
       return {
-        cards: state.cards,
-        gameProgress: state.gameProgress,
+        ...state,
         gameCardCount: action.gameCardCount,
       };
     default:

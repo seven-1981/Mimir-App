@@ -32,7 +32,7 @@ export const TitleBar = () => {
     } else if (gameProgress === gameCardCount) {
       return "Finished";
     } else {
-      return "Solve # " + gameProgress.toString();
+      return "Solve # " + (gameProgress + 1).toString();
     }
   };
 

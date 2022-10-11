@@ -1,4 +1,3 @@
-import { StyledCardList, StyledLabel, StyledLink } from "../styles";
 import { GameCard } from "../../models/GameCard";
 
 export interface GameResultItemProps {
@@ -11,7 +10,7 @@ export const GameResultItem = ({ card }: GameResultItemProps) => {
       <td>{card.front}</td>
       <td>{card.back}</td>
       <td>{card.answer}</td>
-      <td>{card.accepted ? "True" : "False"}</td>
+      <td>{card.accepted ? "\u2705" : "\u274C"}</td>
     </tr>
   );
 };

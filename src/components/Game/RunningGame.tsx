@@ -24,11 +24,15 @@ export const RunningGame = () => {
       const { game, success } = await fetchApiGetGame("/api/game");
       if (success) {
         setFrontText(game.front);
-        setProgress(Math.round((100 * gameProgress) / gameCardCount));
+        setProgressValue(gameProgress);
       }
     };
     fetchGame();
   }, []);
+
+  const setProgressValue = (progress: number) => {
+    setProgress(Math.round((100 * progress) / gameCardCount));
+  };
 
   const onClickSubmitButton = async () => {
     if (inputText === "") {
@@ -53,7 +57,7 @@ export const RunningGame = () => {
     dispatch({ type: "update-gameProgress", gameProgress: newGameProgress });
     setFrontText(data.front);
     setInputText("");
-    setProgress(Math.round((100 * newGameProgress) / gameCardCount));
+    setProgressValue(newGameProgress);
   };
 
   const onClickDeleteButton = async () => {

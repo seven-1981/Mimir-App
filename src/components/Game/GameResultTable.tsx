@@ -31,7 +31,7 @@ export const ResultsTable = (props: ResultsTableProps) => {
         <tbody>
           {props.solved &&
             props.solved.map((card) => {
-              return <GameResultItem card={card} />;
+              return <GameResultItem card={card} key={card.id} />;
             })}
         </tbody>
       </table>
