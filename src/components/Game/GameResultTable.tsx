@@ -1,7 +1,5 @@
 import { GameCard } from "../../models/GameCard";
-import { CardListItem } from "../Card/CardListItem";
 import { GameResultItem } from "./GameResultItem";
-import { StyledLabel } from "../styles";
 
 export interface ResultsTableProps {
   solved: GameCard[];
