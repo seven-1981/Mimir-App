@@ -1,7 +1,7 @@
 import { GameCard } from "../../models/GameCard";
 import { useEffect, useState } from "react";
 import { fetchApiGetGame } from "../../utils/fetchApiGet";
-import { ResultsTable } from "./ResultTable";
+import { ResultsTable } from "./GameResultTable";
 import { StyledButton } from "../styles";
 
 export interface GameResultProps {
@@ -13,10 +13,8 @@ export const GameResult = (props: GameResultProps) => {
 
   useEffect(() => {
     fetchGameCards().then((cards) => {
-      console.log(cards);
       setSolvedCards(cards);
       setFetched(true);
-      console.log("LOADED");
     });
   }, [fetched]);
 
