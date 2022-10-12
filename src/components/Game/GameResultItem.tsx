@@ -1,4 +1,5 @@
 import { GameCard } from "../../models/GameCard";
+import { StyledGameResultTableItem } from "../styles";
 
 export interface GameResultItemProps {
   card: GameCard;
@@ -7,10 +8,12 @@ export interface GameResultItemProps {
 export const GameResultItem = ({ card }: GameResultItemProps) => {
   return (
     <tr>
-      <td>{card.front}</td>
-      <td>{card.back}</td>
-      <td>{card.answer}</td>
-      <td>{card.accepted ? "\u2705" : "\u274C"}</td>
+      <StyledGameResultTableItem>{card.front}</StyledGameResultTableItem>
+      <StyledGameResultTableItem>{card.back}</StyledGameResultTableItem>
+      <StyledGameResultTableItem>{card.answer}</StyledGameResultTableItem>
+      <StyledGameResultTableItem>
+        {card.accepted ? "\u2705" : "\u274C"}
+      </StyledGameResultTableItem>
     </tr>
   );
 };

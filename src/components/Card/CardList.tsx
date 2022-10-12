@@ -17,7 +17,7 @@ export const CardList = () => {
   };
 
   return (
-    <>
+    <div>
       <CardInput />
       <StyledLabel>{!cards && "NO CARDS FOUND"}</StyledLabel>
       <div>
@@ -32,6 +32,6 @@ export const CardList = () => {
             );
           })}
       </div>
-    </>
+    </div>
   );
 };

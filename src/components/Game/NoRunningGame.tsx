@@ -1,4 +1,4 @@
-import { StyledButton, StyledLabel } from "../styles";
+import { StyledButton, StyledInputForm, StyledLabel } from "../styles";
 
 export interface NoRunningGameProps {
   onClickStartButton: () => void;
@@ -6,11 +6,11 @@ export interface NoRunningGameProps {
 
 export const NoRunningGame = (props: NoRunningGameProps) => {
   return (
-    <div>
+    <StyledInputForm>
       <StyledButton onClick={props.onClickStartButton}>
         Start New Game
       </StyledButton>
       <StyledLabel>No game running</StyledLabel>
-    </div>
+    </StyledInputForm>
   );
 };
