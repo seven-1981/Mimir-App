@@ -3,7 +3,7 @@ import { fetchApiGetGame } from "../../utils/fetchApiGet";
 import { fetchApiWithData } from "../../utils/fetchApi";
 import { fetchApi } from "../../utils/fetchApi";
 import { GameAnswer } from "../../models/GameAnswer";
-import { Game } from "../../models/Game";
+import { emptyGame, Game } from "../../models/Game";
 import {
   StyledInput,
   StyledButton,
@@ -18,20 +18,29 @@ export const RunningGame = () => {
   const [inputText, setInputText] = useState("");
   const [frontText, setFrontText] = useState("");
   const [progress, setProgress] = useState(0);
+  const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
-    const fetchGame = async () => {
+    const fetchGame = async (): Promise<Game> => {
       const { game, success } = await fetchApiGetGame("/api/game");
-      if (success) {
-        setFrontText(game.front);
-        setProgressValue(gameProgress);
+      if (!success) {
+        return emptyGame;
       }
+      return game;
     };
-    fetchGame();
-  }, []);
+    fetchGame().then((game) => {
+      setFrontText(game.front);
+      setProgressValue(gameProgress);
+      setFetched(true);
+    });
+  }, [fetched]);
 
   const setProgressValue = (progress: number) => {
-    setProgress(Math.round((100 * progress) / gameCardCount));
+    if (gameCardCount > 0) {
+      setProgress(Math.round((100 * progress) / gameCardCount));
+    } else {
+      setProgress(0);
+    }
   };
 
   const onClickSubmitButton = async () => {
@@ -43,7 +52,7 @@ export const RunningGame = () => {
 
   const updateGameStatus = async () => {
     const currentAnswer: GameAnswer = {
-      answer: inputText,
+      answer: inputText.trim(),
     };
     const { data, success } = await fetchApiWithData<GameAnswer, Game>(
       "/api/game",

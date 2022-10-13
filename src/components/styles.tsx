@@ -118,8 +118,8 @@ export const StyledInputForm = styled.div`
 
 export const StyledCardFront = styled.div`
   display: flex;
-  width: 400px;
-  height: 200px;
+  width: 40vw;
+  height: 20vh;
   background: white;
   border: solid;
   border-radius: 0.4rem;
@@ -127,4 +127,21 @@ export const StyledCardFront = styled.div`
   font-size: 2rem;
   align-items: center;
   justify-content: center;
+`;
+
+export const StyledGameResult = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5em;
+  margin: 50px;
+`;
+
+export const StyledGameResultTable = styled.table`
+  border-spacing: 10px;
+  border-collapse: separate;
+`;
+
+export const StyledGameResultTableItem = styled.td`
+  padding: 10px;
 `;
