@@ -21,19 +21,18 @@ export const RunningGame = () => {
   const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
-    const fetchGame = async (): Promise<Game> => {
+    const fetchGame = async () => {
       const { game, success } = await fetchApiGetGame("/api/game");
-      if (!success) {
-        return emptyGame;
+      if (success) {
+        console.log("gameProgress: " + gameProgress);
+        console.log("game.front: " + game.front);
+        setFrontText(game.front);
+        setProgressValue(gameProgress);
+        setFetched(true);
       }
-      return game;
     };
-    fetchGame().then((game) => {
-      setFrontText(game.front);
-      setProgressValue(gameProgress);
-      setFetched(true);
-    });
-  }, [fetched]);
+    fetchGame();
+  }, [fetched, frontText]);
 
   const setProgressValue = (progress: number) => {
     if (gameCardCount > 0) {

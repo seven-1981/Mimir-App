@@ -10,6 +10,7 @@ export const GamePage = () => {
   const { gameProgress, gameCardCount, dispatch } = useContext(AppContext);
 
   const onClickStartButton = async () => {
+    console.log("Start gameProgress: " + gameProgress);
     const { success } = await fetchApiGetGame("/api/game");
     if (success) {
       const successDelete = await fetchApi("/api/game", "DELETE");
