@@ -28,15 +28,10 @@ export function apiReducer(state: ApiState, action: Action): ApiState {
           return card.id === action.id ? action.card : card;
         }),
       };
-    case "update-gameProgress":
+    case "update-game":
       return {
         ...state,
-        gameProgress: action.gameProgress,
-      };
-    case "set-gameCardCount":
-      return {
-        ...state,
-        gameCardCount: action.gameCardCount,
+        game: action.game,
       };
     default:
       return initialState;

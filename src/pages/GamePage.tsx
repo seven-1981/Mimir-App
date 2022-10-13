@@ -4,28 +4,34 @@ import { GameResult } from "../components/Game/GameResult";
 import { useContext } from "react";
 import { AppContext } from "../store/context";
 import { fetchApiGetGame } from "../utils/fetchApiGet";
-import { fetchApi } from "../utils/fetchApi";
+import { fetchApi, fetchApiWithData } from "../utils/fetchApi";
+import { emptyGame, Game } from "../models/Game";
 
 export const GamePage = () => {
-  const { gameProgress, gameCardCount, dispatch } = useContext(AppContext);
+  const { game, dispatch } = useContext(AppContext);
+
+  const gameProgress = game.solved.length;
+  const gameCardCount = game.cardCount;
 
   const onClickStartButton = async () => {
-    console.log("Start gameProgress: " + gameProgress);
-    const { success } = await fetchApiGetGame("/api/game");
-    if (success) {
+    const { success: successGet } = await fetchApiGetGame("/api/game");
+    if (successGet) {
       const successDelete = await fetchApi("/api/game", "DELETE");
       if (!successDelete) {
         return;
       }
     }
-    const successPost = await fetchApi("/api/game", "POST");
-    if (!successPost) {
+    const { success: successPost, data: game } = await fetchApiWithData<
+      Game,
+      Game
+    >("/api/game", "POST", emptyGame);
+    if (!successPost || !game) {
       return;
     }
-    dispatch({ type: "update-gameProgress", gameProgress: 0 });
+    dispatch({ type: "update-game", game: game });
   };
 
-  if (gameProgress === -1) {
+  if (gameCardCount === -1) {
     return <NoRunningGame onClickStartButton={() => onClickStartButton()} />;
   } else if (gameProgress === gameCardCount) {
     return <GameResult onClickStartButton={() => onClickStartButton()} />;

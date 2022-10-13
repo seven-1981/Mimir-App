@@ -3,12 +3,12 @@ import { createContext, ReactNode, useEffect, useReducer } from "react";
 import { apiReducer } from "./apiReducer";
 import { fetchApiGetCards, fetchApiGetGame } from "../utils/fetchApiGet";
 import { Action } from "../models/Action";
+import { emptyGame } from "../models/Game";
 
 export const initialState: AppState = {
   dispatch: (_action: Action) => {},
   cards: [],
-  gameProgress: -1,
-  gameCardCount: -1,
+  game: emptyGame,
 };
 
 export const AppContext = createContext<AppState>(initialState);
@@ -32,11 +32,7 @@ export const AppProvider = ({ children }: Props) => {
     const onMountGame = async () => {
       const { game, success } = await fetchApiGetGame("/api/game");
       if (success) {
-        dispatch({
-          type: "update-gameProgress",
-          gameProgress: game.solved.length,
-        });
-        dispatch({ type: "set-gameCardCount", gameCardCount: game.cardCount });
+        dispatch({ type: "update-game", game });
       }
     };
     onMountCards();

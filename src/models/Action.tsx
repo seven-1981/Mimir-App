@@ -1,4 +1,5 @@
 import { Card } from "./Card";
+import { Game } from "./Game";
 
 type SetCardsAction = {
   type: "set-cards";
@@ -21,14 +22,9 @@ type UpdateCardAction = {
   card: Card;
 };
 
-type SetGameCardCount = {
-  type: "set-gameCardCount";
-  gameCardCount: number;
-};
-
-type UpdateGameProgressAction = {
-  type: "update-gameProgress";
-  gameProgress: number;
+type UpdateGameAction = {
+  type: "update-game";
+  game: Game;
 };
 
 export type Action =
@@ -36,5 +32,4 @@ export type Action =
   | DeleteCardAction
   | AddCardAction
   | UpdateCardAction
-  | UpdateGameProgressAction
-  | SetGameCardCount;
+  | UpdateGameAction;
