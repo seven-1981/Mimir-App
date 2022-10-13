@@ -31,7 +31,7 @@ export const GamePage = () => {
     dispatch({ type: "update-game", game: game });
   };
 
-  if (gameCardCount === -1) {
+  if (gameCardCount === emptyGame.cardCount) {
     return <NoRunningGame onClickStartButton={() => onClickStartButton()} />;
   } else if (gameProgress === gameCardCount) {
     return <GameResult onClickStartButton={() => onClickStartButton()} />;
