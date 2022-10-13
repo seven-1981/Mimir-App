@@ -10,11 +10,11 @@ import {
 import { AppContext } from "../store/context";
 
 export const TitleBar = () => {
-  const { gameProgress, gameCardCount } = useContext(AppContext);
+  const { game } = useContext(AppContext);
   const navigate = useNavigate();
 
   const onClickSolveButton = () => {
-    if (gameProgress === -1) {
+    if (game.cardCount === -1) {
       navigate(ROUTE_HOME);
     } else {
       const url = window.location.href;
@@ -27,12 +27,12 @@ export const TitleBar = () => {
   };
 
   const getButtonString = (): string => {
-    if (gameProgress === -1) {
+    if (game.cardCount === -1) {
       return "New Game";
-    } else if (gameProgress === gameCardCount) {
+    } else if (game.solved.length === game.cardCount) {
       return "Finished";
     } else {
-      return "Solve # " + (gameProgress + 1).toString();
+      return "Solve # " + (game.solved.length + 1).toString();
     }
   };
 

@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { fetchApiGetGame } from "../../utils/fetchApiGet";
+import { useContext, useState } from "react";
 import { fetchApiWithData } from "../../utils/fetchApi";
 import { fetchApi } from "../../utils/fetchApi";
 import { GameAnswer } from "../../models/GameAnswer";
@@ -14,32 +13,14 @@ import {
 import { AppContext } from "../../store/context";
 
 export const RunningGame = () => {
-  const { gameProgress, gameCardCount, dispatch } = useContext(AppContext);
+  const { game, dispatch } = useContext(AppContext);
   const [inputText, setInputText] = useState("");
-  const [frontText, setFrontText] = useState("");
-  const [progress, setProgress] = useState(0);
-  const [fetched, setFetched] = useState(false);
 
-  useEffect(() => {
-    const fetchGame = async (): Promise<Game> => {
-      const { game, success } = await fetchApiGetGame("/api/game");
-      if (!success) {
-        return emptyGame;
-      }
-      return game;
-    };
-    fetchGame().then((game) => {
-      setFrontText(game.front);
-      setProgressValue(gameProgress);
-      setFetched(true);
-    });
-  }, [fetched]);
-
-  const setProgressValue = (progress: number) => {
-    if (gameCardCount > 0) {
-      setProgress(Math.round((100 * progress) / gameCardCount));
+  const getProgressValue = (progress: number) => {
+    if (game.cardCount > 0) {
+      return Math.round((100 * progress) / game.cardCount);
     } else {
-      setProgress(0);
+      return 0;
     }
   };
 
@@ -54,19 +35,16 @@ export const RunningGame = () => {
     const currentAnswer: GameAnswer = {
       answer: inputText.trim(),
     };
-    const { data, success } = await fetchApiWithData<GameAnswer, Game>(
+    const { data: game, success } = await fetchApiWithData<GameAnswer, Game>(
       "/api/game",
       "PATCH",
       currentAnswer
     );
-    if (!success || !data) {
+    if (!success || !game) {
       return;
     }
-    const newGameProgress = gameProgress + 1;
-    dispatch({ type: "update-gameProgress", gameProgress: newGameProgress });
-    setFrontText(data.front);
     setInputText("");
-    setProgressValue(newGameProgress);
+    dispatch({ type: "update-game", game: game });
   };
 
   const onClickDeleteButton = async () => {
@@ -74,19 +52,21 @@ export const RunningGame = () => {
     if (!success) {
       return;
     }
-    dispatch({ type: "update-gameProgress", gameProgress: -1 });
+    dispatch({ type: "update-game", game: emptyGame });
   };
 
   return (
     <div>
       <StyledInputForm>
-        <StyledLabel>Progress: {progress}</StyledLabel>
+        <StyledLabel>
+          Progress: {getProgressValue(game.solved.length)}
+        </StyledLabel>
         <StyledButton onClick={() => onClickDeleteButton()}>
           Delete Game
         </StyledButton>
       </StyledInputForm>
       <StyledInputForm>
-        <StyledCardFront> {frontText} </StyledCardFront>
+        <StyledCardFront> {game.front} </StyledCardFront>
       </StyledInputForm>
       <StyledInputForm>
         <StyledInput
