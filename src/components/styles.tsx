@@ -118,13 +118,13 @@ export const StyledInputForm = styled.div`
 
 export const StyledCardFront = styled.div`
   display: flex;
-  width: 40vw;
-  height: 20vh;
+  width: 30vw;
+  height: 30vh;
   background: white;
   border: solid;
   border-radius: 0.4rem;
   border-color: black;
-  font-size: 2rem;
+  font-size: calc(3vw + 0.5vh);
   align-items: center;
   justify-content: center;
 `;
