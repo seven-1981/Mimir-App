@@ -39,7 +39,7 @@ export const StyledLabel = styled.label`
   font-size: 24px;
 `;
 
-export const StyledCardList = styled.div`
+export const StyledCardListItem = styled.div`
   display: grid;
   justify-content: space-between;
   flex-align: left;
@@ -112,6 +112,12 @@ export const StyledInput = styled.input`
 export const StyledInputForm = styled.div`
   display: flex;
   flex-align: center;
+  justify-content: space-evenly;
+  margin: 50px;
+`;
+
+export const StyledNoGame = styled.div`
+  display: flex;
   justify-content: space-evenly;
   margin: 50px;
 `;

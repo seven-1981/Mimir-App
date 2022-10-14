@@ -1,8 +1,8 @@
 import {
   StyledButton,
   StyledGameResult,
-  StyledInputForm,
   StyledLabel,
+  StyledNoGame,
 } from "../styles";
 import { GameResultTable } from "./GameResultTable";
 import { emptyGame, Game } from "../../models/Game";
@@ -45,12 +45,12 @@ export const NoRunningGame = () => {
     );
   } else {
     return (
-      <StyledInputForm>
+      <StyledNoGame>
         <StyledButton onClick={() => onClickStartButton()}>
           Start New Game
         </StyledButton>
         <StyledLabel>No game running</StyledLabel>
-      </StyledInputForm>
+      </StyledNoGame>
     );
   }
 };
