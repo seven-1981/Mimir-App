@@ -6,8 +6,7 @@ import {
 } from "../styles";
 import { GameResultTable } from "./GameResultTable";
 import { emptyGame, Game } from "../../models/Game";
-import { fetchApiGetGame } from "../../utils/fetchApiGet";
-import { fetchApi, fetchApiWithData } from "../../utils/fetchApi";
+import { fetchApi, fetchApiGet, fetchApiWithData } from "../../utils/fetchApi";
 import { useContext } from "react";
 import { AppContext } from "../../store/context";
 import { URL_API_GAME } from "../../pages/URLs";
@@ -18,7 +17,10 @@ export const NoRunningGame = () => {
   const gameFinished = game.solved.length === game.cardCount;
 
   const onClickStartButton = async () => {
-    const { success: successGet } = await fetchApiGetGame(URL_API_GAME);
+    const { success: successGet } = await fetchApiGet<Game>(
+      URL_API_GAME,
+      emptyGame
+    );
     if (successGet) {
       const successDelete = await fetchApi(URL_API_GAME, "DELETE");
       if (!successDelete) {

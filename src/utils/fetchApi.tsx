@@ -18,7 +18,7 @@ export async function fetchApi(
   return false;
 }
 
-export interface FetchApiWithDataResponse<T> {
+export interface ApiWithDataResponse<T> {
   data: T | undefined;
   success: boolean;
 }
@@ -27,7 +27,7 @@ export async function fetchApiWithData<DataType, ReturnType>(
   URL: string,
   httpMethod: HttpMethod,
   data: DataType
-): Promise<FetchApiWithDataResponse<ReturnType>> {
+): Promise<ApiWithDataResponse<ReturnType>> {
   try {
     const apiResponse = await fetch(URL, {
       method: httpMethod,
@@ -43,4 +43,25 @@ export async function fetchApiWithData<DataType, ReturnType>(
     console.log("Error " + error + " during HTTP " + httpMethod + " of " + URL);
   }
   return { data: undefined, success: false };
+}
+
+export interface ApiGetResponse<Type> {
+  data: Type;
+  success: boolean;
+}
+
+export async function fetchApiGet<Type>(
+  URL: string,
+  emptyData: Type
+): Promise<ApiGetResponse<Type>> {
+  try {
+    const apiResponse = await fetch(URL);
+    if (apiResponse.ok) {
+      const jsonData: Type = await apiResponse.json();
+      return { data: jsonData, success: true };
+    }
+  } catch (error) {
+    console.log("Error " + error + " during GET " + URL);
+  }
+  return { data: emptyData, success: false };
 }

@@ -9,3 +9,5 @@ export type Card = {
 export const createCard = (front: string, back: string) => {
   return { id: uuidV4(), front: front, back: back };
 };
+
+export const emptyCards = [];
