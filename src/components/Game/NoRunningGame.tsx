@@ -1,6 +1,6 @@
 import {
   StyledButton,
-  StyledGameResult,
+  StyledResult,
   StyledLabel,
   StyledNoGame,
 } from "../styles";
@@ -37,12 +37,12 @@ export const NoRunningGame = () => {
 
   if (gameFinished) {
     return (
-      <StyledGameResult>
+      <StyledResult>
         <StyledButton onClick={() => onClickStartButton()}>
           Start New Game
         </StyledButton>
         <GameResultTable solved={game.solved} />
-      </StyledGameResult>
+      </StyledResult>
     );
   } else {
     return (

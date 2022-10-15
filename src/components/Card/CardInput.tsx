@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { fetchApiWithData } from "../../utils/fetchApi";
 import { Card, createCard } from "../../models/Card";
 import { AppContext } from "../../store/context";
-import { StyledButton, StyledInput, StyledInputForm } from "../styles";
+import { StyledButton, StyledInput, StyledForm } from "../styles";
 import { useNavigate } from "react-router-dom";
 import { fetchApi } from "../../utils/fetchApi";
 import { URL_API_CARDS, URL_CARDS } from "../../pages/URLs";
@@ -22,7 +22,7 @@ export const CardInput = (props: CardInputProps) => {
       setBackText(props.card.back);
       setFrontText(props.card.front);
     }
-  }, []);
+  }, [props.card]);
 
   const definedCardId = props.card ? props.card.id : "";
 
@@ -80,7 +80,7 @@ export const CardInput = (props: CardInputProps) => {
   };
 
   return (
-    <StyledInputForm>
+    <StyledForm>
       <StyledInput
         type="text"
         value={frontText}
@@ -96,6 +96,6 @@ export const CardInput = (props: CardInputProps) => {
       <StyledButton onClick={() => onClickAddOrUpdateButton(definedCardId)}>
         {props.card ? "Update" : "Add"}
       </StyledButton>
-    </StyledInputForm>
+    </StyledForm>
   );
 };

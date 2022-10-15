@@ -1,5 +1,5 @@
 import { GameCard } from "../../models/GameCard";
-import { StyledGameResultTableItem } from "../styles";
+import { StyledResultTableItem } from "../styles";
 
 export interface GameResultItemProps {
   card: GameCard;
@@ -8,12 +8,12 @@ export interface GameResultItemProps {
 export const GameResultItem = ({ card }: GameResultItemProps) => {
   return (
     <tr>
-      <StyledGameResultTableItem>{card.front}</StyledGameResultTableItem>
-      <StyledGameResultTableItem>{card.back}</StyledGameResultTableItem>
-      <StyledGameResultTableItem>{card.answer}</StyledGameResultTableItem>
-      <StyledGameResultTableItem>
+      <StyledResultTableItem>{card.front}</StyledResultTableItem>
+      <StyledResultTableItem>{card.back}</StyledResultTableItem>
+      <StyledResultTableItem>{card.answer}</StyledResultTableItem>
+      <StyledResultTableItem>
         {card.accepted ? "\u2705" : "\u274C"}
-      </StyledGameResultTableItem>
+      </StyledResultTableItem>
     </tr>
   );
 };
