@@ -1,6 +1,6 @@
 import { Card } from "../../models/Card";
 import {
-  StyledCardList,
+  StyledCardListItem,
   StyledButton,
   StyledLink,
   StyledLabel,
@@ -16,13 +16,13 @@ export const CardListItem = ({
   onClickDeleteButton,
 }: CardListItemProps) => {
   return (
-    <StyledCardList>
+    <StyledCardListItem>
       <StyledLabel>{card.front}</StyledLabel>
       <StyledLabel>{card.back}</StyledLabel>
       <StyledLink to={card.id}>Edit</StyledLink>
       <StyledButton onClick={() => onClickDeleteButton(card.id)}>
         Delete
       </StyledButton>
-    </StyledCardList>
+    </StyledCardListItem>
   );
 };

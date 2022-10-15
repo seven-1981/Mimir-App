@@ -2,7 +2,6 @@ import { fetchApi } from "../../utils/fetchApi";
 import { CardInput } from "./CardInput";
 import { AppContext } from "../../store/context";
 import { useContext } from "react";
-import { StyledLabel } from "../styles";
 import { CardListItem } from "./CardListItem";
 
 export const CardList = () => {
@@ -19,7 +18,6 @@ export const CardList = () => {
   return (
     <div>
       <CardInput />
-      <StyledLabel>{!cards && "NO CARDS FOUND"}</StyledLabel>
       <div>
         {cards &&
           cards.map((card) => {
