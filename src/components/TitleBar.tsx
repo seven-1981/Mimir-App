@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { ROUTE_CARDS, ROUTE_HOME } from "../App";
+import { URL_CARDS, URL_HOME } from "../pages/URLs";
 import {
   StyledButton,
   StyledLabel,
@@ -16,13 +16,13 @@ export const TitleBar = () => {
 
   const onClickSolveButton = () => {
     if (game.cardCount === emptyGame.cardCount) {
-      navigate(ROUTE_HOME);
+      navigate(URL_HOME);
     } else {
       const url = window.location.href;
-      if (url.toString().endsWith(ROUTE_HOME)) {
-        navigate(ROUTE_CARDS);
+      if (url.toString().endsWith(URL_HOME)) {
+        navigate(URL_CARDS);
       } else {
-        navigate(ROUTE_HOME);
+        navigate(URL_HOME);
       }
     }
   };
@@ -43,7 +43,7 @@ export const TitleBar = () => {
       <StyledButton onClick={() => onClickSolveButton()}>
         {getButtonString()}
       </StyledButton>
-      <StyledLink to={"/cards"}>Manage Cards</StyledLink>
+      <StyledLink to={URL_CARDS}>Manage Cards</StyledLink>
     </StyledTitleBar>
   );
 };

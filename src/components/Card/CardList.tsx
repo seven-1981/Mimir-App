@@ -3,12 +3,13 @@ import { CardInput } from "./CardInput";
 import { AppContext } from "../../store/context";
 import { useContext } from "react";
 import { CardListItem } from "./CardListItem";
+import { URL_API_CARDS } from "../../pages/URLs";
 
 export const CardList = () => {
   const { cards, dispatch } = useContext(AppContext);
 
   const onClickDeleteButton = async (id: string) => {
-    const success = await fetchApi("/api/cards", "DELETE", id);
+    const success = await fetchApi(URL_API_CARDS, "DELETE", id);
     if (!success) {
       return;
     }

@@ -5,11 +5,7 @@ import { CardsPage } from "./pages/CardsPage";
 import { CardPage } from "./pages/CardPage";
 import { GamePage } from "./pages/GamePage";
 import { GlobalStyle } from "./components/styles";
-
-export const ROUTE_HOME = "/";
-export const ROUTE_CARDS = "/cards";
-export const ROUTE_CARD = "/cards/:cardId";
-export const ROUTE_NOT_FOUND = "*";
+import { URL_HOME, URL_CARD, URL_CARDS, URL_NOT_FOUND } from "./pages/URLs";
 
 function App() {
   const DOH = "doh.gif";
@@ -18,13 +14,13 @@ function App() {
     <>
       <GlobalStyle />
       <Routes>
-        <Route path={ROUTE_HOME} element={<HomePage />}>
-          <Route path={ROUTE_HOME} element={<GamePage />} />
-          <Route path={ROUTE_CARDS} element={<CardsPage />} />
-          <Route path={ROUTE_CARD} element={<CardPage />} />
+        <Route path={URL_HOME} element={<HomePage />}>
+          <Route path={URL_HOME} element={<GamePage />} />
+          <Route path={URL_CARDS} element={<CardsPage />} />
+          <Route path={URL_CARD} element={<CardPage />} />
         </Route>
         <Route
-          path={ROUTE_NOT_FOUND}
+          path={URL_NOT_FOUND}
           element={
             <img src={DOH} alt={"DOH! That route could not be found!"} />
           }

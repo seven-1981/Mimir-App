@@ -4,6 +4,7 @@ import { apiReducer } from "./apiReducer";
 import { fetchApiGetCards, fetchApiGetGame } from "../utils/fetchApiGet";
 import { Action } from "../models/Action";
 import { emptyGame } from "../models/Game";
+import { URL_API_CARDS, URL_API_GAME } from "../pages/URLs";
 
 export const initialState: AppState = {
   dispatch: (_action: Action) => {},
@@ -22,7 +23,7 @@ export const AppProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const onMountCards = async () => {
-      const { cards, success } = await fetchApiGetCards("/api/cards");
+      const { cards, success } = await fetchApiGetCards(URL_API_CARDS);
       if (!success) {
         console.log("Error during fetching of card list!");
         return;
@@ -30,7 +31,7 @@ export const AppProvider = ({ children }: Props) => {
       dispatch({ type: "set-cards", cards });
     };
     const onMountGame = async () => {
-      const { game, success } = await fetchApiGetGame("/api/game");
+      const { game, success } = await fetchApiGetGame(URL_API_GAME);
       if (success) {
         dispatch({ type: "update-game", game });
       }
