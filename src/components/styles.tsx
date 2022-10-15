@@ -19,6 +19,7 @@ const Background = css`
 export const GlobalStyle = createGlobalStyle`
 * {
     box-sizing: border-box;
+    color: rgb(5, 6, 45);
     margin: 10;
     text-shadow: -1px 0 white, 0 1px black, 1px 0 black, 0 -1px white;
     letter-spacing: 2px;
@@ -124,15 +125,18 @@ export const StyledNoGame = styled.div`
 
 export const StyledCardFront = styled.div`
   display: flex;
-  width: 40vw;
-  height: 20vh;
+  flex-align: center;
+  justify-content: space-evenly;
+  margin: 50px;
+  width: 30vw;
+  height: 30vh;
+  color: rgb(5, 6, 45);
   background: white;
   border: solid;
   border-radius: 0.4rem;
-  border-color: black;
-  font-size: 2rem;
+  border-color: rgb(5, 6, 45);
+  font-size: calc(2.5vw + 0.5vh);
   align-items: center;
-  justify-content: center;
 `;
 
 export const StyledGameResult = styled.div`
