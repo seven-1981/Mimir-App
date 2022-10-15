@@ -52,7 +52,7 @@ export const NoRunningGame = () => {
         <StyledButton onClick={() => onClickStartButton()}>
           Start New Game
         </StyledButton>
-        <StyledLabel>No game running</StyledLabel>
+        <StyledLabel>No Game running</StyledLabel>
       </StyledNoGame>
     );
   }
