@@ -8,13 +8,14 @@ import {
   StyledTitleBar,
 } from "./styles";
 import { AppContext } from "../store/context";
+import { emptyGame } from "../models/Game";
 
 export const TitleBar = () => {
   const { game } = useContext(AppContext);
   const navigate = useNavigate();
 
   const onClickSolveButton = () => {
-    if (game.cardCount === -1) {
+    if (game.cardCount === emptyGame.cardCount) {
       navigate(ROUTE_HOME);
     } else {
       const url = window.location.href;
@@ -27,7 +28,7 @@ export const TitleBar = () => {
   };
 
   const getButtonString = (): string => {
-    if (game.cardCount === -1) {
+    if (game.cardCount === emptyGame.cardCount) {
       return "New Game";
     } else if (game.solved.length === game.cardCount) {
       return "Finished";

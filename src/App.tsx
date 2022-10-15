@@ -12,8 +12,7 @@ export const ROUTE_CARD = "/cards/:cardId";
 export const ROUTE_NOT_FOUND = "*";
 
 function App() {
-  const DOH =
-    "https://media0.giphy.com/media/l0G18G3m69vQCOddm/giphy.gif?cid=ecf05e47ok9m1m7xezaobtu0x4skbtxxrh1rf4fwqxhhxwmf&rid=giphy.gif&ct=g";
+  const DOH = "doh.gif";
 
   return (
     <>

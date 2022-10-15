@@ -25,7 +25,7 @@ export const RunningGame = () => {
   };
 
   const onClickSubmitButton = async () => {
-    if (inputText === "") {
+    if (inputText.trim() === "") {
       return;
     }
     await updateGameStatus();
