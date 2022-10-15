@@ -27,9 +27,16 @@ ${Background};
 }`;
 
 export const StyledTitleBar = styled.div`
+  background: linear-gradient(
+    45deg,
+    rgba(150, 154, 197, 1) 0%,
+    rgba(201, 211, 212, 1) 31%,
+    rgba(178, 209, 220, 0.9920343137254902) 92%
+  );
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin: 10px;
   padding: 10px;
 `;

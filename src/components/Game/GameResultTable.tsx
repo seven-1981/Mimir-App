@@ -7,13 +7,18 @@ export interface GameResultTableProps {
 }
 
 export const GameResultTable = (props: GameResultTableProps) => {
-  const getCorrectAnswersText = () => {
+  const getNumberOfCorrectAnswers = () => {
     let correctAnswers = 0;
     for (const card of props.solved) {
       if (card.accepted) {
         correctAnswers++;
       }
     }
+    return correctAnswers;
+  };
+
+  const getCorrectAnswersText = () => {
+    const correctAnswers = getNumberOfCorrectAnswers();
     return "Solved " + correctAnswers + " out of " + props.solved.length;
   };
 
