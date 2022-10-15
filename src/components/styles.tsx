@@ -132,7 +132,7 @@ export const StyledCardFront = styled.div`
   border: solid;
   border-radius: 0.4rem;
   border-color: black;
-  font-size: calc(3vw + 0.5vh);
+  font-size: calc(2.5vw + 0.5vh);
   align-items: center;
 `;
 
