@@ -11,6 +11,7 @@ import {
   StyledCardFront,
 } from "../styles";
 import { AppContext } from "../../store/context";
+import { URL_API_GAME } from "../../pages/URLs";
 
 export const RunningGame = () => {
   const { game, dispatch } = useContext(AppContext);
@@ -36,7 +37,7 @@ export const RunningGame = () => {
       answer: inputText.trim(),
     };
     const { data: game, success } = await fetchApiWithData<GameAnswer, Game>(
-      "/api/game",
+      URL_API_GAME,
       "PATCH",
       currentAnswer
     );
@@ -48,7 +49,7 @@ export const RunningGame = () => {
   };
 
   const onClickDeleteButton = async () => {
-    const success = await fetchApi("/api/game", "DELETE");
+    const success = await fetchApi(URL_API_GAME, "DELETE");
     if (!success) {
       return;
     }

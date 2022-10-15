@@ -5,6 +5,7 @@ import { AppContext } from "../../store/context";
 import { StyledButton, StyledInput, StyledInputForm } from "../styles";
 import { useNavigate } from "react-router-dom";
 import { fetchApi } from "../../utils/fetchApi";
+import { URL_API_CARDS, URL_CARDS } from "../../pages/URLs";
 
 export interface CardInputProps {
   card?: Card;
@@ -43,7 +44,7 @@ export const CardInput = (props: CardInputProps) => {
     if (cardExistsOrEmpty(frontText, backText)) return;
     const newCard = createCard(frontText, backText);
     const success = await fetchApiWithData<Card, undefined>(
-      "/api/cards",
+      URL_API_CARDS,
       "POST",
       newCard
     );
@@ -61,12 +62,12 @@ export const CardInput = (props: CardInputProps) => {
       props.card.back = backText;
       props.card.front = frontText;
 
-      const success = await fetchApi("/api/cards", "PUT", id);
+      const success = await fetchApi(URL_API_CARDS, "PUT", id);
       if (!success) {
         return;
       }
       dispatch({ type: "update-card", id: id, card: props.card });
-      navigate("/cards");
+      navigate(URL_CARDS);
     }
   };
 
