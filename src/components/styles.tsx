@@ -118,6 +118,8 @@ export const StyledInputForm = styled.div`
 
 export const StyledCardFront = styled.div`
   display: flex;
+  flex-align: center;
+  justify-content: space-evenly;
   width: 30vw;
   height: 30vh;
   background: white;
@@ -126,7 +128,6 @@ export const StyledCardFront = styled.div`
   border-color: black;
   font-size: calc(3vw + 0.5vh);
   align-items: center;
-  justify-content: center;
 `;
 
 export const StyledGameResult = styled.div`
