@@ -18,9 +18,7 @@ const Background = css`
 
 export const GlobalStyle = createGlobalStyle`
 * {
-    box-sizing: border-box;
     color: rgb(5, 6, 45);
-    margin: 10;
     text-shadow: -1px 0 white, 0 1px black, 1px 0 black, 0 -1px white;
     letter-spacing: 2px;
 }
@@ -29,9 +27,16 @@ ${Background};
 }`;
 
 export const StyledTitleBar = styled.div`
+  background: linear-gradient(
+    45deg,
+    rgba(150, 154, 197, 1) 0%,
+    rgba(201, 211, 212, 1) 31%,
+    rgba(178, 209, 220, 0.9920343137254902) 92%
+  );
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin: 10px;
   padding: 10px;
 `;
@@ -51,8 +56,7 @@ export const StyledCardListItem = styled.div`
   border: 1px solid grey;
 `;
 
-// Todo: Check if some of the css properties are not necessary
-export const FancyButtonStyle = css`
+const FancyButtonStyle = css`
   background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
   border: 0;
   border-radius: 8px;
@@ -110,7 +114,7 @@ export const StyledInput = styled.input`
 }
 `;
 
-export const StyledInputForm = styled.div`
+export const StyledForm = styled.div`
   display: flex;
   flex-align: center;
   justify-content: space-evenly;
@@ -123,12 +127,19 @@ export const StyledNoGame = styled.div`
   margin: 50px;
 `;
 
+export const StyledRunningGame = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center:
+`;
+
 export const StyledCardFront = styled.div`
   display: flex;
-  flex-align: center;
-  justify-content: space-evenly;
-  margin: 50px;
-  width: 30vw;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  width: 50vw;
   height: 30vh;
   color: rgb(5, 6, 45);
   background: white;
@@ -136,10 +147,9 @@ export const StyledCardFront = styled.div`
   border-radius: 0.4rem;
   border-color: rgb(5, 6, 45);
   font-size: calc(2.5vw + 0.5vh);
-  align-items: center;
 `;
 
-export const StyledGameResult = styled.div`
+export const StyledResult = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -147,11 +157,11 @@ export const StyledGameResult = styled.div`
   margin: 50px;
 `;
 
-export const StyledGameResultTable = styled.table`
+export const StyledResultTable = styled.table`
   border-spacing: 10px;
   border-collapse: separate;
 `;
 
-export const StyledGameResultTableItem = styled.td`
+export const StyledResultTableItem = styled.td`
   padding: 10px;
 `;

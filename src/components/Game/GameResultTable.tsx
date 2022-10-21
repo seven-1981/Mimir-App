@@ -1,32 +1,37 @@
 import { GameCard } from "../../models/GameCard";
 import { GameResultItem } from "./GameResultItem";
-import { StyledGameResultTable, StyledGameResultTableItem } from "../styles";
+import { StyledResultTable, StyledResultTableItem } from "../styles";
 
 export interface GameResultTableProps {
   solved: GameCard[];
 }
 
 export const GameResultTable = (props: GameResultTableProps) => {
-  const getCorrectAnswersText = () => {
+  const getNumberOfCorrectAnswers = () => {
     let correctAnswers = 0;
     for (const card of props.solved) {
       if (card.accepted) {
         correctAnswers++;
       }
     }
+    return correctAnswers;
+  };
+
+  const getCorrectAnswersText = () => {
+    const correctAnswers = getNumberOfCorrectAnswers();
     return "Solved " + correctAnswers + " out of " + props.solved.length;
   };
 
   return (
     <div>
       <p>{getCorrectAnswersText()}</p>
-      <StyledGameResultTable>
+      <StyledResultTable>
         <thead>
           <tr>
-            <StyledGameResultTableItem>Front </StyledGameResultTableItem>
-            <StyledGameResultTableItem>Back</StyledGameResultTableItem>
-            <StyledGameResultTableItem>Your Answer</StyledGameResultTableItem>
-            <StyledGameResultTableItem>Accepted</StyledGameResultTableItem>
+            <StyledResultTableItem>Front </StyledResultTableItem>
+            <StyledResultTableItem>Back</StyledResultTableItem>
+            <StyledResultTableItem>Your Answer</StyledResultTableItem>
+            <StyledResultTableItem>Accepted</StyledResultTableItem>
           </tr>
         </thead>
         <tbody>
@@ -35,7 +40,7 @@ export const GameResultTable = (props: GameResultTableProps) => {
               return <GameResultItem card={card} key={card.id} />;
             })}
         </tbody>
-      </StyledGameResultTable>
+      </StyledResultTable>
     </div>
   );
 };

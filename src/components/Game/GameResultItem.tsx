@@ -1,19 +1,21 @@
 import { GameCard } from "../../models/GameCard";
-import { StyledGameResultTableItem } from "../styles";
+import { StyledResultTableItem } from "../styles";
 
 export interface GameResultItemProps {
   card: GameCard;
 }
 
 export const GameResultItem = ({ card }: GameResultItemProps) => {
+  const IMG_URL = card.accepted ? "tick.png" : "cross.png";
+  const IMG_URL_alt = card.accepted ? "\u2705" : "\u274C";
   return (
     <tr>
-      <StyledGameResultTableItem>{card.front}</StyledGameResultTableItem>
-      <StyledGameResultTableItem>{card.back}</StyledGameResultTableItem>
-      <StyledGameResultTableItem>{card.answer}</StyledGameResultTableItem>
-      <StyledGameResultTableItem>
-        {card.accepted ? "\u2705" : "\u274C"}
-      </StyledGameResultTableItem>
+      <StyledResultTableItem>{card.front}</StyledResultTableItem>
+      <StyledResultTableItem>{card.back}</StyledResultTableItem>
+      <StyledResultTableItem>{card.answer}</StyledResultTableItem>
+      <StyledResultTableItem>
+        <img src={IMG_URL} alt={IMG_URL_alt} />
+      </StyledResultTableItem>
     </tr>
   );
 };

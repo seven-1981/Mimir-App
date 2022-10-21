@@ -7,8 +7,9 @@ import {
   StyledInput,
   StyledButton,
   StyledLabel,
-  StyledInputForm,
+  StyledForm,
   StyledCardFront,
+  StyledRunningGame,
 } from "../styles";
 import { AppContext } from "../../store/context";
 import { URL_API_GAME } from "../../pages/URLs";
@@ -57,19 +58,17 @@ export const RunningGame = () => {
   };
 
   return (
-    <div>
-      <StyledInputForm>
+    <StyledRunningGame>
+      <StyledForm>
         <StyledLabel>
           Progress: {getProgressValue(game.solved.length)}
         </StyledLabel>
         <StyledButton onClick={() => onClickDeleteButton()}>
           Delete Game
         </StyledButton>
-      </StyledInputForm>
-      <StyledInputForm>
-        <StyledCardFront> {game.front} </StyledCardFront>
-      </StyledInputForm>
-      <StyledInputForm>
+      </StyledForm>
+      <StyledCardFront> {game.front} </StyledCardFront>
+      <StyledForm>
         <StyledInput
           type="text"
           onChange={(event) => setInputText(event.target.value)}
@@ -79,7 +78,7 @@ export const RunningGame = () => {
         <StyledButton onClick={() => onClickSubmitButton()}>
           Submit
         </StyledButton>
-      </StyledInputForm>
-    </div>
+      </StyledForm>
+    </StyledRunningGame>
   );
 };
