@@ -51,7 +51,7 @@ export const StyledCardListItem = styled.div`
   justify-content: space-between;
   flex-align: left;
   grid-template-columns: 0.4fr 0.4fr 0.1fr 0.1fr;
-  gap: 12px;
+  gap: 10px;
   margin: 20px;
   padding: 5px;
   border: 1px solid grey;
@@ -142,7 +142,7 @@ export const StyledCardFront = styled.div`
   align-items: center;
   justify-content: center;
   margin: 20px;
-  width: 30vw;
+  width: 40vw;
   height: 30vh;
   color: rgb(5, 6, 45);
   background: white;
@@ -156,7 +156,7 @@ export const StyledResult = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: ${adaptiveFontSize(0.5, 1)};
+  font-size: ${adaptiveFontSize(0.5, 0.5)};
   margin: 50px;
 `;
 
