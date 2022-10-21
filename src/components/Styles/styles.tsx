@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components/macro";
 import { Link } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-import { adaptiveFontSize } from "../utils/adaptiveFontSize";
+import { adaptiveFontSize } from "./adaptiveFontSize";
 
 const Background = css`
   min-height: 100vh;
@@ -44,6 +44,8 @@ export const StyledTitleBar = styled.div`
 
 export const StyledLabel = styled.label`
   font-size: ${adaptiveFontSize(0.25, 0.5)};
+  word-wrap: break-word;
+  word-break: break-all;
 `;
 
 export const StyledCardListItem = styled.div`
@@ -72,6 +74,7 @@ const FancyButtonStyle = css`
   cursor: pointer;
   min-width: 80px;
   min-height: 30px;
+  max-height: 40px;
   padding: 10px;
 
   &:hover {
@@ -150,6 +153,8 @@ export const StyledCardFront = styled.div`
   border-radius: 0.4rem;
   border-color: rgb(5, 6, 45);
   font-size: ${adaptiveFontSize(1, 1.5)};
+  word-wrap: break-word;
+  word-break: break-all;
 `;
 
 export const StyledResult = styled.div`
@@ -167,4 +172,6 @@ export const StyledResultTable = styled.table`
 
 export const StyledResultTableItem = styled.td`
   padding: 10px;
+  word-wrap: break-word;
+  word-break: break-all;
 `;

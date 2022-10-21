@@ -4,7 +4,7 @@ import { HomePage } from "./pages/HomePage";
 import { CardsPage } from "./pages/CardsPage";
 import { CardPage } from "./pages/CardPage";
 import { GamePage } from "./pages/GamePage";
-import { GlobalStyle } from "./components/styles";
+import { GlobalStyle } from "./components/Styles/styles";
 import { URL_HOME, URL_CARD, URL_CARDS, URL_NOT_FOUND } from "./pages/URLs";
 
 function App() {

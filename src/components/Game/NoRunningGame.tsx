@@ -3,7 +3,7 @@ import {
   StyledResult,
   StyledLabel,
   StyledNoGame,
-} from "../styles";
+} from "../Styles/styles";
 import { GameResultTable } from "./GameResultTable";
 import { emptyGame, Game } from "../../models/Game";
 import { fetchApi, fetchApiGet, fetchApiWithData } from "../../utils/fetchApi";

@@ -10,7 +10,7 @@ import {
   StyledForm,
   StyledCardFront,
   StyledRunningGame,
-} from "../styles";
+} from "../Styles/styles";
 import { AppContext } from "../../store/context";
 import { URL_API_GAME } from "../../pages/URLs";
 

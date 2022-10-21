@@ -4,7 +4,7 @@ import {
   StyledButton,
   StyledLink,
   StyledLabel,
-} from "../styles";
+} from "../Styles/styles";
 
 export interface CardListItemProps {
   card: Card;

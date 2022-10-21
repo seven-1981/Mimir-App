@@ -6,7 +6,7 @@ import {
   StyledLabel,
   StyledLink,
   StyledTitleBar,
-} from "./styles";
+} from "./Styles/styles";
 import { AppContext } from "../store/context";
 import { emptyGame } from "../models/Game";
 
