@@ -1,5 +1,5 @@
 import { GameCard } from "../../models/GameCard";
-import { StyledResultTableItem } from "../styles";
+import { StyledResultTableItem } from "../Styles/styles";
 
 export interface GameResultItemProps {
   card: GameCard;

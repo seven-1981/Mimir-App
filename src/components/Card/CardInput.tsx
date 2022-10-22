@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { fetchApiWithData } from "../../utils/fetchApi";
 import { Card, createCard } from "../../models/Card";
 import { AppContext } from "../../store/context";
-import { StyledButton, StyledInput, StyledForm } from "../styles";
+import { StyledButton, StyledInput, StyledForm } from "../Styles/styles";
 import { useNavigate } from "react-router-dom";
 import { fetchApi } from "../../utils/fetchApi";
 import { URL_API_CARDS, URL_CARDS } from "../../pages/URLs";
